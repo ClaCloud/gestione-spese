@@ -1,0 +1,68 @@
+{
+  "short_name": "Gestione Spese",
+  "name": "Gestione Spese",
+  "description": "App Pper la gestione delle proprie spese",
+  "icons": [
+    {
+      "src": "/assets/img/ico192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "/assets/img/ico512.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "/home",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#000000",
+  "lang": "it-IT",
+  "dir": "ltr",
+  "scope": "/",
+  "shortcuts": [
+    {
+      "name": "Aggiungi Entrata",
+      "short_name": "Entrata",
+      "description": "Aggiungi una nuova Entrata",
+      "url": "/add-entrata",
+      "icons": [{"src": "/assets/img/plus.png","type": "image/png","sizes": "344x344"}]
+    },
+    {
+      "name": "Aggiungi Uscita",
+      "short_name": "Uscita",
+      "description": "Aggiungi una nuova Spesa",
+      "url": "/add-spesa",
+      "icons": [{"src": "/assets/img/minus.png","type": "image/png","sizes": "344x344"}]
+    },
+    {
+      "name": "Spazi",
+      "short_name": "Spazi",
+      "description": "Visualizza o modifica gli spazi per raggruppare le tue spese",
+      "url": "/spazi",
+      "icons": [{"src": "/assets/img/icons/cartella.png","type": "image/png","sizes": "344x344"}]
+    },
+    {
+      "name": "Statistiche Spese",
+      "short_name": "Statistiche Spese",
+      "description": "Statistiche Spese",
+      "url": "/stats",
+      "icons": [{"src": "/assets/img/icons/stats.png","type": "image/png","sizes": "344x344"}]
+    },
+    {
+      "name": "Debiti e Crediti",
+      "short_name": "Debiti e Crediti",
+      "description": "Debiti e Crediti",
+      "url": "/profilo/debcred/",
+      "icons": [{"src": "/assets/img/check.png","type": "image/png","sizes": "344x344"}]
+    },
+    {
+      "name": "Spese Ricorrenti",
+      "short_name": "Spese Ricorrenti",
+      "description": "Spese Ricorrenti",
+      "url": "/ricorrenti",
+      "icons": [{"src": "/assets/img/ricorrente.png","type": "image/png","sizes": "344x344"}]
+    }
+  ]
+}

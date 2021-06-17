@@ -1,0 +1,254 @@
+@keyframes load {
+  from {
+      left: -150px;
+  }
+  to   {
+      left: 100%;
+  }
+}
+
+.preloading{
+  .say-mese{
+    top: 0!important;
+    background: var(--start3t);
+    color: transparent;
+    border-radius: 10px;
+    margin: 10px 0;
+    padding: 0px 15px;
+    max-width: max-content;
+  }
+  &:not(#profilo) .box:not(.viewCat){
+    .dati{
+      .motivo{
+        margin-top: -5px;
+        margin-bottom: 5px;
+      }
+      .data{
+        margin-bottom: -5px;
+        margin-top: 5px;
+      }
+    }
+  }
+  .box{
+    &:hover{
+      filter: none;
+    }
+    .icona{
+      background: var(--start3t);
+      border-radius: 10px;
+      img{
+        display: none;
+      }
+    }
+    .dati{
+      .motivo{
+        max-width: max-content;
+        background: var(--start3t);
+        color: transparent;
+        border-radius: 10px;
+      }
+      .data{
+        max-width: max-content;
+        background: var(--start3t);
+        color: transparent;
+        border-radius: 10px;
+      }
+    }
+    .prezzo,.categoria{
+      background: var(--start3t);
+      color: transparent!important;
+      border-radius: 10px;
+    }
+    .appunti{
+      background: var(--start3t);
+      color: transparent!important;
+      min-height: 0;
+      height: max-content;
+      border-radius: 10px;
+      margin-bottom: 100px;
+    }
+  }
+
+  .button{
+    filter: grayscale(1);
+    color: transparent;
+  }
+
+  .spazi .spazio{
+    &.nuovo{
+      display: none!important;
+    }
+    .icona{
+      background: var(--start3t)!important;
+      border-radius: 10px;
+      img{
+        display: none;
+      }
+    }
+    .info{
+      .nome{
+        margin-top: -4px;
+        margin-bottom: 4px;
+      }
+      .nome,.bilancio{
+        width: max-content;
+        background: var(--start3t);
+        color: transparent!important;
+        border-radius: 10px;
+      }
+    }
+  }
+  #icona-spazio{
+    background: var(--start3t)!important;
+    img{
+      display: none;
+    }
+  }
+
+  label{
+    .placeholder{
+      display: none;
+    }
+  }
+
+  .roundbtn{
+    display: none;
+  }
+
+  .box,
+  .say-mese,
+  .button,
+  .carta,
+  .benvenuto,
+  .frasetta,
+  #profilo h2,
+  &#spazio .top,
+  .totale.col-3 > .totale,
+  .totale.col-3 > span,
+  .spazi .spazio .icona,
+  #icona-spazio,
+  &#transazione .top .ico{
+    overflow: hidden;
+    position: relative;
+    &::before {
+      content: '';
+      display: block;
+      position: absolute;
+      left: -150px;
+      top: 0;
+      height: 100%;
+      width: 150px;
+      background: linear-gradient(to right, transparent 0%, var(--start3t) 50%, transparent 100%);
+      animation: load 1s cubic-bezier(0.4, 0.0, 0.2, 1) infinite;
+    }
+  }
+}
+#transazione.preloading{
+  .top, .ico{
+    background: var(--start3);
+    img{
+      display: none;
+    }
+  }
+}
+
+#stats.preloading{
+  .mese-S .top .container{
+    filter: brightness(1);
+    .mese{
+      position: relative;
+      color: transparent!important;
+      .anno{
+        margin: 0 auto 5px;
+        width: max-content;
+        background: var(--start3t)!important;
+        color: transparent!important;
+        border-radius: 10px;
+      }
+      &::after{
+        content: '';
+        background: var(--start3t)!important;
+        border-radius: 10px;
+        position: absolute;
+        bottom: 0;
+        left: calc(50% - 100px);
+        height: 48px;
+        width: 200px;
+      }
+    }
+    .row .totale{
+      .totale, span{
+        display: block;
+        width: max-content;
+        background: var(--start3t)!important;
+        color: transparent!important;
+        border-radius: 10px;
+      }
+      span{
+        margin: 0 auto;
+      }
+      .totale{
+        margin-bottom: 5px;
+      }
+    }
+  }
+}
+
+#spazio.preloading{
+  .top{
+    position: fixed!important;
+    background: var(--start3)!important;
+    img{
+      display: none;
+    }
+  }
+  .info-spazio{
+    justify-content: space-between;
+    .nome,.bilancio{
+      width: max-content;
+      background: var(--start3t)!important;
+      color: transparent!important;
+      border-radius: 10px;
+    }
+  }
+}
+
+#profilo.preloading{
+  .top {
+    h2{
+      margin: 0 auto 20px;
+      width: max-content;
+      background: var(--start3t)!important;
+      color: transparent!important;
+      border-radius: 10px;
+    }
+    .carta{
+      & > span{
+        width: max-content;
+        background: var(--start3t)!important;
+        color: transparent!important;
+        border-radius: 10px;
+        .imp{
+          display: none;
+        }
+      }
+    }
+  }
+  .init{
+    .benvenuto,.frasetta{
+      display: block;
+      width: max-content;
+      background: var(--start3t)!important;
+      color: transparent!important;
+      border-radius: 10px;
+    }
+    .benvenuto{
+      margin-top: -5px;
+      margin-bottom: 5px;
+    }
+    .frasetta{
+      margin-bottom: -5px;
+      margin-top: 5px;
+    }
+  }
+}

@@ -1,0 +1,133 @@
+.box{
+  display: flex;
+  background: var(--start2);
+  border-radius: 20px;
+  margin: 20px 0;
+  padding: 15px;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.2);
+  align-items: center;
+  text-align: left;
+  transition: {
+    property: filter, opacity, transform!important;
+    duration: .3s;
+  }
+  .hidden{
+    display: none;
+  }
+  .icona{
+    min-width: 60px;
+    max-width: 60px;
+    min-height: 60px;
+    max-height: 60px;
+    border-radius: 5px;
+    text-align: center;
+    i{
+      font-size: 30px;
+      padding: 15px 0;
+    }
+  }
+  .dati{
+    width: 100%;
+    padding-left: 10px;
+    .motivo{
+      font-size: 24px;
+      font-weight: 500;
+      &::first-letter{
+        text-transform: capitalize;
+      }
+      @media screen and (max-width: 460px){
+        font-size: 20px;
+      }
+    }
+    .data{
+      font-size: 14px;
+      font-weight: 400;
+      &::first-letter{
+        text-transform: capitalize;
+      }
+    }
+    [data-id] & {
+      text-transform: capitalize;
+    }
+  }
+  .prezzo{
+    text-align: right;
+    width: 100%;
+    max-width: max-content;
+    font-size: 24px;
+    font-weight: 500;
+    border-radius: 10px;
+    padding: 5px;
+    @media screen and (max-width: 460px){
+      font-size: 20px;
+    }
+  }
+  .categoria{
+    font-size: 18px;
+    margin: -5px auto;
+  }
+  .appunti{
+    font-size: 20px;
+    min-height: 150px;
+    img{
+      width: 100%;
+    }
+  }
+  .spazio{
+    font-size: 20px;
+  }
+  &.debito{
+    border: 1px solid var(--alert);
+    box-shadow: 0px 0px 10px 4px rgba(179,0,0,0.2);
+  }
+  &.credito{
+    border: 1px solid var(--green);
+    box-shadow: 0px 0px 10px 4px rgba(8,132,0,0.2);
+  }
+  img{
+    transition: {
+      property: filter;
+      duration: .3s;
+    }
+  }
+  &:hover{
+    filter: brightness(1.2);
+    img{
+      filter: brightness(.8);
+    }
+  }
+  .back_swipe &{
+    position: relative;
+    z-index: 1;
+    margin: 0;
+    background: var(--gradient);
+    .dati{
+      .motivo{
+        font-weight: 700;
+      }
+      .data{
+        margin-top: 15px;
+      }
+    }
+  }
+}
+.back_swipe{
+  position: relative;
+  margin: 20px auto;
+  border-radius: 20px;
+  background: var(--alert);
+  overflow: hidden;
+  &::before,&::after{
+    content: 'Nascondi';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 0;
+  }
+  &::before{
+    left: 10px;
+  }
+  &::after{
+    right: 10px;
+  }
+}

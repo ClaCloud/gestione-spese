@@ -1,0 +1,54 @@
+.button{
+  font-size: 18px;
+  font-weight: bold;
+  font-family: 'Roboto', sans-serif;
+  border-radius: 10px;
+  background: var(--secondary);
+  color: #fff;
+  padding: 25px 20px;
+  display: block;
+  position: relative;
+  width: 100%;
+  margin: 20px auto;
+  text-align: center;
+  appearance: unset;
+  -webkit-appearance: unset;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+  transition: {
+    property: color;
+    duration: .3s;
+  }
+  span{
+    position: relative;
+    z-index: 1;
+  }
+  &.mini{
+    margin: 20px 0px 0px;
+    padding: 15px 10px;
+  }
+  &.inline{
+    display: inline-block;
+    vertical-align: middle;
+    width: auto;
+    margin: 20px 5px 0px 0px;
+    &:last-child{
+      margin: 20px 0 0;
+    }
+  }
+  &.text{
+    padding: 5px 10px;
+    font-size: inherit;
+    margin: 10px;
+    display: inline-block;
+    vertical-align: middle;
+    width: auto;
+  }
+  &.marbot{
+    margin: 0 0 20px;
+  }
+  &.marboth{
+    margin-bottom: 20px;
+  }
+}
