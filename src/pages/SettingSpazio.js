@@ -3,18 +3,14 @@ import BackBar from '../components/backbar';
 import $, { jQuery } from 'jquery';
 import AddSpazioComponent from '../components/addSpazio';
 
-export default function Setting (props) {
+export default function Setting(props) {
 
   useEffect(() => {
     fetchData();
   });
 
-  useEffect(() => {
-    $(`input[type=radio][name=icona_spazio][id=${icona}]`).attr("checked", true);
-  }, []);
-
   const [itemsLoaded, setitemsLoaded] = useState(true);
-  const [Spazio, setSpazio] = useState([]);
+  const [Spazio, setSpazio] = useState({});
 
   const id = props.match.params.id;
 
@@ -35,32 +31,34 @@ export default function Setting (props) {
   }
 
   const nome = Spazio.Nome,
-    icona = Spazio.IDicona;
+    icona = Spazio.IDicona,
+    percorso = Spazio.percorso,
+    colore = Spazio.colore;
 
   const UpdateSpazio = (event) => {
     event.preventDefault();
-    if ($('input[type="radio"]').is(':checked')) {
-      // const icona = $("input[type=radio]:checked").val(),
-      //   nome = $("input[name=spazio]").val();
 
-      // $.ajax({
-      //   type: "POST",
-      //   url: "/API/addSpazio.php",
-      //   data: {
-      //     icona: icona,
-      //     nome: nome
-      //   },
-      //   success: function (response) {
-      //     if (response == true) {
-      //       window.location.replace("/spazo/"+id);
-      //     } else {
-      //       alert(response)
-      //     }
-      //   }
-      // });
-    } else {
-      $(".error").addClass("visible");
-    }
+    const SelectedIcona = $("input[type=radio]:checked").val() ?? $(`input[type=radio][id=${icona}]`).val(),
+        SelectedNome = $("input[name=spazio]").val();
+
+    console.log("icona: ", SelectedIcona, " Nome: ", SelectedNome);
+
+      $.ajax({
+        type: "POST",
+        url: "/API/modificaSpazio.php",
+        data: {
+          id: id,
+          icona: SelectedIcona,
+          nome: SelectedNome
+        },
+        success: function (response) {
+          if (response == true) {
+            window.location.replace("/spazio/"+id);
+          } else {
+            alert(response)
+          }
+        }
+      });
   }
 
   return (
@@ -68,14 +66,14 @@ export default function Setting (props) {
       <BackBar text={`Impostazioni`} />
       <div className="container">
         <form onSubmit={UpdateSpazio}>
-          <AddSpazioComponent nome={nome} icona={icona} />
+          <AddSpazioComponent nome={nome} percorso={percorso} colore={colore} />
           <div className="fixed bot">
-              <div className="container">
-                <button type="submit" className="button mini bgprimary marbot">Conferma</button>
-              </div>
+            <div className="container">
+              <button type="submit" className="button mini bgprimary marbot">Conferma</button>
             </div>
+          </div>
         </form>
-      
+
       </div>
     </div>
   )

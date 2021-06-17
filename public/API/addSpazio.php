@@ -3,7 +3,7 @@
   require("auth.php");
   require("dbconn.php");
 
-  if (isset($_REQUEST['nome'])){
+  if (isset($_REQUEST['nome'])) {
     $spazio = $_REQUEST['nome'];
     $icona = $_REQUEST['icona'];
     $query = "

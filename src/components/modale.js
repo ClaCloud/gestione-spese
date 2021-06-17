@@ -3,7 +3,7 @@ import $ from 'jquery';
 
 function Modale(props) {
 
-  useEffect(() => {
+  useEffect( async () =>  {
     var viewportX = window.innerWidth;
     var viewportY = window.innerHeight;
 
@@ -19,7 +19,7 @@ function Modale(props) {
       });
     });
 
-    $(".open-modal").on("click", function () {
+    $("#root").on("click", ".open-modal", function () {
       let questo = $(this).attr("data-modal") ? ".modale[data-modal=" + $(this).attr("data-modal") + "]" : ".modale";
       $(questo).addClass("open");
       if ($(questo).children(".modal-content").height() + 80 >= viewportY) {
@@ -28,12 +28,12 @@ function Modale(props) {
         $(questo).removeClass("long");
       }
     });
-    $(".close-modal").on("click", function () {
+    $("#root").on("click", ".close-modal", function () {
       let questo = $(this).attr("data-modal") ? ".modale[data-modal=" + $(this).attr("data-modal") + "]" : ".modale";
       $(questo).removeClass("open");
     });
 
-    $(".modale").on("click", function (e) {
+    $(".modale").on("click", async function (e) {
       if (e.target === this) {
         $(this).removeClass("open");
       }

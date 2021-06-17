@@ -273,9 +273,10 @@
         width: 215px;
       }
       .iconlist{
-        max-height: calc(100vh - 69px - 92px - 40px);
+        max-height: calc(100vh - 69px - 92px - 50px);
         overflow: auto;
         margin-right: -3px;
+        margin-top: 10px;
       }
       .spazio{
         width: 175px;

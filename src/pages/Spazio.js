@@ -15,7 +15,7 @@ function Spazi(props) {
   }, []);
 
   const [itemsLoaded, setitemsLoaded] = useState(false);
-  const [Spazio, setSpazio] = useState({Nome: "Nome Spazio", Bilancio: "0.00"});
+  const [Spazio, setSpazio] = useState({ Nome: "Nome Spazio", Bilancio: "0.00" });
   const [movimenti, setMovimenti] = useState([]);
 
   const fetchData = () => {
@@ -39,6 +39,23 @@ function Spazi(props) {
         setMovimenti(data2);
         setitemsLoaded(true);
       });
+  }
+
+  const elimina = () => {
+    $.ajax({
+      type: "POST",
+      url: "/API/removeSpazio.php",
+      data: {
+        id: id
+      },
+      success: function (response) {
+        if (response == true) {
+          window.location.replace("/spazi");
+        } else {
+          alert(response)
+        }
+      }
+    });
   }
 
   function SayMese(props) {
@@ -70,7 +87,7 @@ function Spazi(props) {
     <div id="spazio" className={itemsLoaded ? (null) : ('preloading')}>
       <BackBar text={
         <Link to={`/spazio/${id}/setting`}>
-          <i class="fas fa-cog"></i>
+          <i className="fas fa-cog"></i>
         </Link>
       } />
       <div className="top" style={{ background: Spazio.colore }} >
@@ -78,19 +95,23 @@ function Spazi(props) {
       </div>
       <div className="frame">
         <div className="container">
-          <div class="info-spazio">
-            <span class="nome">{Spazio.Nome}</span>
+          <div className="info-spazio">
+            <span className="nome">{Spazio.Nome}</span>
             <CurrencyFormat value={Spazio.Bilancio} isNumericString={true} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} decimalScale={2} fixedDecimalScale={true} renderText={value =>
               <span className="bilancio">
                 € {value}
               </span>
             } />
           </div>
-          { itemsLoaded ? ( movimenti.length == 0 || movimenti.length == undefined ? (
+          {itemsLoaded ? (movimenti.length == 0 || movimenti.length == undefined ? (
             movimenti.length == 0 ? (
-              <div class="box">
-                <h2 class="center">Ancora nessuna transazione</h2>
-              </div>
+              <>
+                <div className="box">
+                  <h2 className="center">Ancora nessuna transazione</h2>
+                </div>
+                <button onClick={elimina} className="button mini bgalert marbot">Elimina Spazio Vuoto</button>
+              </>
+
             ) : (
               <div className="box-temporale">
                 <SayMese render={true} label={qstanno === dateFormat(movimenti.Data, "yyyy") ? (qstmese === dateFormat(movimenti.Data, "mmmm") ? "Questo mese" : dateFormat(movimenti.Data, "mmmm")) : dateFormat(movimenti.Data, "mmmm") + " " + dateFormat(movimenti.Data, "yyyy")} />
@@ -116,7 +137,7 @@ function Spazi(props) {
                 </div>
               )
             })
-          )):(
+          )) : (
             <div className="box-temporale">
               <SayMese render={true} label={`Settembre`} />
               <Box motivo={`Motivo Random`} data={`2021-05-27`} prezzo={`200`} icona={``} />

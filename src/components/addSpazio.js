@@ -9,7 +9,7 @@ export default function AddSpazioComponent(props) {
 
   const fetchData = () => {
     Promise.all([
-      fetch('/API/icons.html', {
+      fetch('/API/icons.php', {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
@@ -43,9 +43,12 @@ export default function AddSpazioComponent(props) {
   useEffect(() => {
 
     fetchData();
-    iconRatio();
 
-    $('input[type=radio][name=icona_spazio]').on("change", function () {
+    $(window).on("ready", async function () {
+      iconRatio();
+    });
+
+    $('#root').on("change", 'input[type=radio][name=icona_spazio]', function () {
       changeSpaceIcon($(this));
     });
 
@@ -56,11 +59,12 @@ export default function AddSpazioComponent(props) {
     $(".error").on("click", function () {
       $(this).removeClass("visible");
     });
-    
+
   }, [])
 
   const nome = props.nome,
-    IDicona = props.icona;
+    percorso = props.percorso ?? "/assets/img/icons/altro.png",
+    colore = props.colore ?? "rgb(252, 224, 162)";
 
 
   return (
@@ -76,7 +80,7 @@ export default function AddSpazioComponent(props) {
             <div className="iconlist">
               {icone.map(icona => (
                 <label htmlFor={icona.id} key={icona.id} className="spazio close-modal">
-                  <input type="radio" id={icona.id} name="icona_spazio" placeholder=" " value={icona.id} color={icona.colore} img={icona.percorso} {...IDicona == icona.id ? ('checked') : (null)} />
+                  <input type="radio" id={icona.id} name="icona_spazio" placeholder=" " value={icona.id} color={icona.colore} img={icona.percorso} />
                   <div className="icona close-modal" style={{ backgroundColor: icona.colore }}>
                     <img src={icona.percorso} alt="icona spazio" />
                   </div>
@@ -104,8 +108,8 @@ export default function AddSpazioComponent(props) {
       <div className="container">
         <div className="selicon">
           <div className="spazio perm">
-            <div id="icona-spazio" className="icona open-modal" style={{ backgroundColor: "rgb(252, 224, 162)" }}>
-              <img src="/assets/img/icons/altro.png" alt="icona spazio" />
+            <div id="icona-spazio" className="icona open-modal" style={{ backgroundColor: colore}}>
+              <img src={percorso} alt="icona spazio" />
               <div className="modifica">
                 <i className="fas fa-pencil"></i>
               </div>
