@@ -3,8 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@nivo/core": "^0.70.1",
-    "@nivo/pie": "^0.70.1",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -19,13 +17,27 @@
     "react-scripts": "4.0.3",
     "swiper": "^6.6.2",
     "universal-cookie": "^4.0.4",
-    "web-vitals": "^2.0.1"
+    "web-vitals": "^2.0.1",
+    "workbox-background-sync": "^5.1.3",
+    "workbox-broadcast-update": "^5.1.3",
+    "workbox-cacheable-response": "^5.1.3",
+    "workbox-core": "^5.1.3",
+    "workbox-expiration": "^5.1.3",
+    "workbox-google-analytics": "^5.1.3",
+    "workbox-navigation-preload": "^5.1.3",
+    "workbox-precaching": "^5.1.3",
+    "workbox-range-requests": "^5.1.3",
+    "workbox-routing": "^5.1.3",
+    "workbox-strategies": "^5.1.3",
+    "workbox-streams": "^5.1.3"
   },
   "scripts": {
+    "rename": "node -e \"require('fs').rename('build/index.html', 'build/index.php', function(err) { if (err) console.log(err); console.log('File successfully renamed!') })\"",
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "init-build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build": "yarn init-build && yarn rename"
   },
   "eslintConfig": {
     "extends": [

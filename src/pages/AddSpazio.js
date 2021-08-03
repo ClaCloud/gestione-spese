@@ -7,6 +7,8 @@ export default function Add() {
 
   const addSpazio = (event) => {
     event.preventDefault();
+    $(".wrap-caricamento").addClass("visible");
+
     if ($('input[type="radio"]').is(':checked')) {
       const icona = $("input[type=radio]:checked").val(),
         nome = $("input[name=spazio]").val();
@@ -20,8 +22,10 @@ export default function Add() {
         },
         success: function (response) {
           if (response == true) {
+            $(".wrap-caricamento").removeClass("visible");
             window.location.replace("/spazi");
           } else {
+            $(".wrap-caricamento").removeClass("visible");
             alert(response)
           }
         }

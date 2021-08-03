@@ -2,6 +2,7 @@
   require("auth.php");
   require("dbconn.php");
   header("Content-type: application/json");
+  header("Cache-Control: no-store, max-age=0");
 
   $id = $_REQUEST['id'] ?? false;
 
@@ -53,9 +54,9 @@
 
   $result = $conn->query($Mystica);
 
-  if ($result->num_rows > 1) {
-    $J=[];
-    $I=0;
+  $J=[];
+  $I=0;
+  if ($result->num_rows > 0) {
     while($row = $result->fetch_assoc()){
       $J[$I]=[
         "id"=>$row['id'],
@@ -69,25 +70,5 @@
       ];
       $I++;
     }
-
-    echo json_encode($J);
-
-  } elseif ($result->num_rows == 1) {
-    $row = $result->fetch_assoc();
-
-    $J = array(
-      "id"=>$row['id'],
-      "position"=>$row['position'],
-      "Nome"=>$row['Nome'],
-      "Abilitato"=>$row['Abilitato'],
-      "Bilancio"=>$row['Bilancio'],
-      "IDicona"=>$row['IDicona'],
-      "percorso"=>$row['percorso'],
-      "colore"=>$row['colore']
-    );
-    
-    echo json_encode($J);
-
-  } else {
-    echo json_encode([]);
   }
+  echo json_encode($J);

@@ -58,6 +58,7 @@
     font-weight: 500;
     border-radius: 10px;
     padding: 5px;
+    margin: 0 auto;
     @media screen and (max-width: 460px){
       font-size: 20px;
     }
@@ -79,10 +80,16 @@
   &.debito{
     border: 1px solid var(--alert);
     box-shadow: 0px 0px 10px 4px rgba(179,0,0,0.2);
+    .prezzo{
+      color: var(--alert)!important;
+    }
   }
   &.credito{
     border: 1px solid var(--green);
     box-shadow: 0px 0px 10px 4px rgba(8,132,0,0.2);
+    .prezzo{
+      color: var(--green)!important;
+    }
   }
   img{
     transition: {

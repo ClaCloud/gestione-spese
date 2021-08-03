@@ -4,12 +4,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 function Box(props) {
-	var CurrencyFormat = require('react-currency-format');
-
 	const id = props.id;
 	const motivo = props.motivo;
 	const data = props.data;
+	const nonData = props.nonData;
 	const link = props.link ?? "#";
+	const className = props.className ?? "";
 	const prezzo = props.prezzo;
 	const nonPrezzo = props.nonPrezzo;
 	const metodo = props.metodo;
@@ -21,7 +21,7 @@ function Box(props) {
 	const colore = props.colore;
 
 	return (
-		<Link to={link} className="box" data-id={id}>
+		<Link to={link} className={`box ${className}`} data-id={id}>
 			<div className="hidden">
 				<span className="categoria">{categoriaFilter}</span>
 				<span className="appunti">{appuntiFilter}</span>
@@ -41,11 +41,19 @@ function Box(props) {
 					<div className="motivo">
 						{motivo}
 					</div>
+
 					{data !== undefined ? (
 						<div className="data">
 							{dateFormat(data, "dd mmmm yyyy")}
 						</div>
 					) : (null)}
+
+					{nonData !== undefined ? (
+						<div className="data">
+							{nonData}
+						</div>
+					) : (null)}
+
 				</div>
 			) : (null)}
 

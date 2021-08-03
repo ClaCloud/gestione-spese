@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 
 function Navbar() {
+  const { pathname } = useLocation();
 
   return (
     <div id="navbar">
@@ -15,7 +16,7 @@ function Navbar() {
           <i className="fas fa-folder"></i><span>Spazi</span>
         </NavLink>
 
-        <NavLink to="/stats" activeClassName="active">
+        <NavLink to="/stats-mese" isActive={() => pathname.includes('/stats')}>
           <i className="fas fa-chart-pie"></i><span>Stats</span>
         </NavLink>
 

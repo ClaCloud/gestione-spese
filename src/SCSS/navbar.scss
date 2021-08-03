@@ -197,3 +197,42 @@
 		box-shadow: 0 0 10px var(--green)!important;
 	}
 }
+
+#stats{
+	padding-bottom: 59px;
+}
+#statNav{
+	position: fixed;
+	z-index: 9999;
+	bottom: 67px;
+	left: 0;
+	width: 100%;
+	padding: 0 10px 10px;
+	.menu{
+		position: relative;
+		max-width: 300px;
+		margin: 0 auto;
+		display: flex;
+		background: var(--start3t);
+		backdrop-filter: blur(10px);
+		padding: 5px;
+		border-radius: 15px;
+		a{
+			padding: 5px 0;
+			width: 50%;
+			text-align: center;
+		}
+		.backLayer{
+			position: absolute;
+			height: calc(100% - 10px);
+			width: calc(50% - 10px);
+			border-radius: 10px;
+			background: var(--start3t);
+			left: 5px;
+			transition: .3s;
+		}
+	}
+}
+.statsAnno #statNav .menu .backLayer{
+	left: calc(50% + 5px);
+}

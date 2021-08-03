@@ -15,7 +15,18 @@ function Spazi(props) {
   }, []);
 
   const [itemsLoaded, setitemsLoaded] = useState(false);
-  const [Spazio, setSpazio] = useState({ Nome: "Nome Spazio", Bilancio: "0.00" });
+  const [Spazio, setSpazio] = useState([
+    {
+      "id": "2",
+      "position": "0",
+      "Nome": "Crociera Lipari-Vulcano Agosto 2020",
+      "Abilitato": "1",
+      "Bilancio": "0.00",
+      "IDicona": "17",
+      "percorso": "/assets/img/icons/mappamondo.png",
+      "colore": "#fce0a2"
+    }
+  ]);
   const [movimenti, setMovimenti] = useState([]);
 
   const fetchData = () => {
@@ -72,17 +83,6 @@ function Spazi(props) {
     }
   }
 
-  var oggi = Date(),
-    qstmese = dateFormat(oggi, "mmmm"),
-    qstanno = dateFormat(oggi, "yyyy"),
-    mese = '',
-    anno = '',
-    premese = '',
-    preanno = '',
-    label = '',
-    did = false,
-    totale = 0;
-
   return (
     <div id="spazio" className={itemsLoaded ? (null) : ('preloading')}>
       <BackBar text={
@@ -90,14 +90,14 @@ function Spazi(props) {
           <i className="fas fa-cog"></i>
         </Link>
       } />
-      <div className="top" style={{ background: Spazio.colore }} >
-        <img src={Spazio.percorso} alt="" />
+      <div className="top" style={{ background: Spazio[0].colore }} >
+        <img src={Spazio[0].percorso} alt="" />
       </div>
       <div className="frame">
         <div className="container">
           <div className="info-spazio">
-            <span className="nome">{Spazio.Nome}</span>
-            <CurrencyFormat value={Spazio.Bilancio} isNumericString={true} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} decimalScale={2} fixedDecimalScale={true} renderText={value =>
+            <span className="nome">{Spazio[0].Nome}</span>
+            <CurrencyFormat value={Spazio[0].Bilancio} isNumericString={true} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} decimalScale={2} fixedDecimalScale={true} renderText={value =>
               <span className="bilancio">
                 € {value}
               </span>
@@ -113,31 +113,16 @@ function Spazi(props) {
               </>
 
             ) : (
-              <div className="box-temporale">
-                <SayMese render={true} label={qstanno === dateFormat(movimenti.Data, "yyyy") ? (qstmese === dateFormat(movimenti.Data, "mmmm") ? "Questo mese" : dateFormat(movimenti.Data, "mmmm")) : dateFormat(movimenti.Data, "mmmm") + " " + dateFormat(movimenti.Data, "yyyy")} />
-                <Box key={movimenti.id} motivo={movimenti.Motivo} data={movimenti.Data} prezzo={movimenti.Soldi} icona={movimenti.percorso} link={`/transazione/${movimenti.id}`} id={movimenti.id} />
-              </div>
-            )
-          ) : (
-            movimenti.map(movimento => {
-              mese = dateFormat(movimento.Data, "mmmm");
-              anno = dateFormat(movimento.Data, "yyyy");
-              if (mese !== premese) {
-                premese = mese;
-                preanno = anno;
-                did = true;
-                label = qstanno === anno ? (qstmese === mese ? "Questo mese" : mese) : mese + " " + anno;
-              } else {
-                did = false;
-              }
-              return (
+              Object.keys(movimenti).map((key, i) => (
                 <div className="box-temporale">
-                  <SayMese render={did} label={label} />
-                  <Box key={movimento.id} motivo={movimento.Motivo} data={movimento.Data} prezzo={movimento.Soldi} icona={movimento.percorso} link={`/transazione/${movimento.id}`} id={movimento.id} />
+                  <SayMese render={true} label={key} />
+                  {movimenti[key].map(movimento => (
+                    <Box key={movimento.id} motivo={movimento.Motivo} data={movimento.Data} prezzo={movimento.Soldi} icona={movimento.percorso} link={`/transazione/${movimento.id}`} id={movimento.id} appuntiFilter={movimento.Appunti} />
+                  ))}
                 </div>
-              )
-            })
-          )) : (
+              ))
+            )
+          ) : null) : (
             <div className="box-temporale">
               <SayMese render={true} label={`Settembre`} />
               <Box motivo={`Motivo Random`} data={`2021-05-27`} prezzo={`200`} icona={``} />

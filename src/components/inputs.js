@@ -3,15 +3,15 @@ import dateFormat from 'dateformat';
 import $, { jQuery } from 'jquery';
 
 export function Text(props) {
-  const thin = props.thin ? "thin" : null;
+  const thin = props.thin ? "thin " : '';
   const id = props.id;
   const nome = props.nome;
   const required = props.required ?? false;
 
   const data = props.data;
   return (
-    <label htmlFor={id} className={thin}>
-      <input type="text" name={id} placeholder=" " maxLength="30" defaultValue={data} required={required} />
+    <label htmlFor={id} className={thin + props.className}>
+      <input type="text" id={id} name={id} placeholder=" " maxLength="30" defaultValue={data} required={required} />
       <span className="placeholder">{nome}</span>
     </label>
   )

@@ -3,10 +3,12 @@ import BackBar from '../components/backbar';
 import $, { jQuery } from 'jquery';
 import AddComponent from '../components/add';
 
-export default function Add (props) {
+export default function Add(props) {
 
   const addTransa = (event) => {
     event.preventDefault();
+
+    $(".wrap-caricamento").addClass("visible");
 
     const categoria = $("#categoria").val(),
       prezzo = $("input[name=prezzo]").val(),
@@ -31,8 +33,10 @@ export default function Add (props) {
       },
       success: function (response) {
         if (response == true) {
+          $(".wrap-caricamento").removeClass("visible");
           window.location.replace("/home");
         } else {
+          $(".wrap-caricamento").removeClass("visible");
           alert(response)
         }
       }
@@ -54,12 +58,12 @@ export default function Add (props) {
         <form onSubmit={addTransa}>
           <AddComponent soldi={soldi} appunti={appunti} motivo={motivo} selectedMetodo={metodo} selectedCategoria={categoria} selectedSpazio={spazio} />
           <div className="fixed bot">
-              <div className="container">
-                <button type="submit" className="button mini bgprimary marbot">Conferma</button>
-              </div>
+            <div className="container">
+              <button type="submit" className="button mini bgprimary marbot">Conferma</button>
             </div>
+          </div>
         </form>
-      
+
       </div>
     </div>
   )

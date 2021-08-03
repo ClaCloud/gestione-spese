@@ -17,7 +17,7 @@
       $totale = $totale - $prezzo;
       $totale = str_replace(",", ".", $totale);
     }
-    if ($spazio!="NULL"){
+    if ($spazio > 0){
       $sql ="SELECT Bilancio FROM $username"."_spazi WHERE id=$spazio";
       $result = $conn->query($sql);
       if ($result->num_rows > 0) {
@@ -25,6 +25,8 @@
         $bilancio = $row["Bilancio"];
         $bilancio = $bilancio - $prezzo;
         $bilancio = str_replace(",", ".", $bilancio);
+      }else{
+        echo "no spazio: spazio=".$spazio;
       }
     }
 
@@ -38,11 +40,14 @@
       ";
       $result = $conn->query($sql);
       if($result){
-        if (isset($spazio)){
+        if ($spazio > 0){
           $sql = "
           UPDATE $username"."_spazi SET Bilancio = '$bilancio' WHERE id = $spazio;
           ";
           $result = $conn->query($sql);
+          if(!$result){
+            echo "no spazio: spazio=".$spazio;
+          }
         }
         if($result){
           echo true;

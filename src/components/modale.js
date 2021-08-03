@@ -42,7 +42,7 @@ function Modale(props) {
 
   const dataModale = props.dataModale;
   const content = props.content;
-  const className = props.className;
+  const className = props.className ?? '';
 
   return (
     <div className={`modale ${className}`} data-modal={dataModale}>

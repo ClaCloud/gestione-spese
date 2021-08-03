@@ -3,6 +3,7 @@
   require("auth.php");
   require("dbconn.php");
   header("Content-type: application/json");
+  header("Cache-Control: no-store, max-age=0");
 
   $oggi=date('Y-m-01');
 
@@ -18,6 +19,7 @@
   $data_fine = date('Y-m-d', strtotime("-1 day", strtotime($data_fine)));
 
   $i=0;
+  $inner=[];
   while($data_inizio <= $oggi) {
 
     $curr= strftime('%B', strtotime($oggi)).strftime('%Y', strtotime($oggi));
@@ -77,6 +79,7 @@
 
     //bilancio
     $bilancio = strval($entrate+$uscite);
+    $bilancio = str_replace(",", ".", $bilancio);
 
     if ($entrate == "0" && $uscite == "0"){
       $esiste=false;

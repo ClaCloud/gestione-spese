@@ -7,7 +7,6 @@ import SwiperCore, {
   Navigation, History
 } from 'swiper/core';
 
-// import { ResponsivePie } from '@nivo/pie'
 
 import CurrencyFormat from 'react-currency-format';
 import $, { jQuery } from 'jquery';
@@ -15,6 +14,8 @@ import $, { jQuery } from 'jquery';
 SwiperCore.use([Navigation, History]);
 
 function Stats() {
+
+  $(".App").removeClass("statsAnno");
 
   useEffect(() => {
     fetchData();
@@ -28,14 +29,14 @@ function Stats() {
       "anno": "2021",
       "entrate": "25.00",
       "uscite": "-26.38",
-      "bilancio": "-1,38"
+      "bilancio": "-1.38"
     },
     {
       "mese": "maggio",
       "anno": "2021",
       "entrate": "50.05",
       "uscite": "-76.09",
-      "bilancio": "-26,04",
+      "bilancio": "-26.04",
       "esiste": true
     },
     {
@@ -122,30 +123,6 @@ function Stats() {
       });
   }
 
-//   const MyResponsivePie = ({ data /* see data tab */ }) => (
-//     <ResponsivePie
-//         data={data}
-//         margin={{ top: 40, right: 80, bottom: 80, left: 80 }}
-//         startAngle={-41}
-//         innerRadius={0.5}
-//         activeInnerRadiusOffset={5}
-//         activeOuterRadiusOffset={5}
-//         colors={{ scheme: 'category10' }}
-//         borderColor={{ from: 'color', modifiers: [ [ 'darker', '0' ] ] }}
-//         enableArcLinkLabels={false}
-//         arcLinkLabelsSkipAngle={10}
-//         arcLinkLabelsTextColor="#333333"
-//         arcLinkLabelsThickness={2}
-//         arcLinkLabelsColor={{ from: 'color' }}
-//         arcLabel="id"
-//         arcLabelsSkipAngle={10}
-//         arcLabelsTextColor={{ from: 'color', modifiers: [ [ 'brighter', '3' ] ] }}
-//         motionConfig="stiff"
-//         transitionMode="endAngle"
-//         legends={[]}
-//     />
-// )
-
   return (
     <div id="stats" className={itemsLoaded ? (null) : ('preloading')}>
       <Swiper dir="rtl" autoHeight={true} slidesPerView={'auto'} centeredSlides={true} spaceBetween={50} history={{
@@ -155,7 +132,7 @@ function Stats() {
           var curr = mese.mese + mese.anno;
           if (mese.esiste) {
             return (
-              <SwiperSlide data-history={`stats-${curr}`} key={curr}>
+              <SwiperSlide data-history={`stats-mese-${curr}`} key={curr}>
                 <div className="mese-S">
                   <div className="top">
                     <div className="container">
@@ -171,7 +148,7 @@ function Stats() {
                       <div className="row">
                         <div className="totale col-3 center">
                           <CurrencyFormat value={mese.entrate} isNumericString={true} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} decimalScale={2} fixedDecimalScale={true} renderText={value =>
-                            <div className={`totale ${mese.entrate > 0 ? ('green') : ('alert')}`}>
+                            <div className={`totale ${mese.entrate > 0 ? ('green') : (mese.entrate < 0 ? 'alert': null)}`}>
                               € {value}
                             </div>
                           } />
@@ -179,7 +156,7 @@ function Stats() {
                         </div>
                         <div className="totale col-3 center">
                           <CurrencyFormat value={mese.uscite} isNumericString={true} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} decimalScale={2} fixedDecimalScale={true} renderText={value =>
-                            <div className={`totale ${mese.uscite > 0 ? ('green') : ('alert')}`}>
+                            <div className={`totale ${mese.uscite > 0 ? ('green') : (mese.uscite < 0 ? 'alert': null)}`}>
                               € {value}
                             </div>
                           } />
@@ -187,7 +164,7 @@ function Stats() {
                         </div>
                         <div className="totale col-3 center">
                           <CurrencyFormat value={mese.bilancio} isNumericString={true} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} decimalScale={2} fixedDecimalScale={true} renderText={value =>
-                            <div className={`totale ${value > 0 ? ('green') : ('alert')}`}>
+                            <div className={`totale ${mese.bilancio > 0 ? ('green') : (mese.bilancio < 0 ? 'alert': null)}`}>
                               € {value}
                             </div>
                           } />
@@ -207,7 +184,7 @@ function Stats() {
                             <div className="motivo">{categoria.Categoria}</div>
                           </div>
                           <CurrencyFormat value={categoria.totale} isNumericString={true} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} decimalScale={2} fixedDecimalScale={true} renderText={value =>
-                            <div className={`prezzo ${categoria.totale > 0 ? ('green') : ('alert')}`}>
+                            <div className={`prezzo ${categoria.totale > 0 ? ('green') : (categoria.totale < 0 ? 'alert': null)}`}>
                               € {value}
                             </div>
                           } />

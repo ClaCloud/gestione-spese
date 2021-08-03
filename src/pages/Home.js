@@ -29,7 +29,7 @@ const Home = () => {
         $(".add-new").animate({
           bottom: "77px"
         }, 300);
-        //ricerca();
+        setFiltered([]);
       } else {
         $(this).parent(".cerca").addClass("open");
         $(this).parent(".cerca").parent(".container").parent(".top").addClass("opened-cerca");
@@ -40,15 +40,24 @@ const Home = () => {
         $(".add-new").animate({
           bottom: "-70px"
         }, 300).children(".container").children(".clickme").removeClass("clicked");
+        search();
       }
     });
+    $("#filter").on("input", function () {
+      search($(this).val());
+    })
+
     $(".fa-eye-change").on("click", function () {
+      const current = new Date();
+      const nextYear = new Date();
+      nextYear.setFullYear(current.getFullYear() + 1);
+
       if ($("html").hasClass("daBlur")) {
         $("html").removeClass("daBlur");
         cookies.remove("blur", { path: '/' });
       } else {
         $("html").addClass("daBlur");
-        cookies.set("blur", "true", { path: '/' });
+        cookies.set("blur", "true", { path: '/', expires: nextYear });
       }
     });
   }, []);
@@ -71,24 +80,29 @@ const Home = () => {
 
   const [itemsLoaded, setitemsLoaded] = useState(false);
   const [movimenti, setMovimenti] = useState([]);
+  const [filtered, setFiltered] = useState([]);
   const [metodi, setMetodi] = useState([{
     "id": "1",
-    "metodo": "Portafogli",
-    "totale": "19.85",
+    "metodo": "Contanti",
+    "totale": "0",
     "visibile": "1"
-  },
-  {
-    "id": "2",
-    "metodo": "N26",
-    "totale": "291.78",
-    "visibile": "0"
-  },
-  {
-    "id": "3",
-    "metodo": "Contanti Nascosti",
-    "totale": "10.0004",
-    "visibile": "0"
   }]);
+
+  const search = (data) => {
+    Promise.all([
+      fetch(`/API/transazioni.php?cerca=${data}`, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        }
+      })
+    ])
+      .then(([res1]) => Promise.all([res1.json()]))
+      .then(([data1]) => {
+        setFiltered(data1);
+      });
+
+  };
 
   const fetchData = () => {
     Promise.all([
@@ -113,21 +127,11 @@ const Home = () => {
       });
   }
 
-
-
-  var oggi = Date(),
-    qstmese = dateFormat(oggi, "mmmm"),
-    qstanno = dateFormat(oggi, "yyyy"),
-    mese = '',
-    anno = '',
-    premese = '',
-    preanno = '',
-    label = '',
-    did = false,
-    totale = 0;
-
+  var totale = 0;
   metodi.map(metodo => {
-    totale = totale - (- metodo.totale)
+    if (metodo.visibile == 1) {
+      totale = totale - (- metodo.totale)
+    }
   })
 
   return (
@@ -195,31 +199,27 @@ const Home = () => {
                   </div>
                 </div>
               ) : (
-                <div className="box-temporale">
-                  <SayMese render={true} label={qstanno === dateFormat(movimenti.Data, "yyyy") ? (qstmese === dateFormat(movimenti.Data, "mmmm") ? "Questo mese" : dateFormat(movimenti.Data, "mmmm")) : dateFormat(movimenti.Data, "mmmm") + " " + dateFormat(movimenti.Data, "yyyy")} />
-                  <Box key={movimenti.id} motivo={movimenti.Motivo} data={movimenti.Data} prezzo={movimenti.Soldi} icona={movimenti.percorso} link={`/transazione/${movimenti.id}`} id={movimenti.id} />
-                </div>
-              )
-            ) : (
-              movimenti.map(movimento => {
-                mese = dateFormat(movimento.Data, "mmmm");
-                anno = dateFormat(movimento.Data, "yyyy");
-                if (mese !== premese) {
-                  premese = mese;
-                  preanno = anno;
-                  did = true;
-                  label = qstanno === anno ? (qstmese === mese ? "Questo mese" : mese) : mese + " " + anno;
-                } else {
-                  did = false;
-                }
-                return (
-                  <div className="box-temporale">
-                    <SayMese render={did} label={label} />
-                    <Box key={movimento.id} motivo={movimento.Motivo} data={movimento.Data} prezzo={movimento.Soldi} icona={movimento.percorso} link={`/transazione/${movimento.id}`} id={movimento.id} />
-                  </div>
+                filtered.length == 0 ? (
+                  Object.keys(movimenti).map((key, i) => (
+                    <div className="box-temporale">
+                      <SayMese render={true} label={key} />
+                      {movimenti[key].map(movimento => (
+                        <Box key={movimento.id} motivo={movimento.Motivo} data={movimento.Data} prezzo={movimento.Soldi} icona={movimento.percorso} link={`/transazione/${movimento.id}`} id={movimento.id} appuntiFilter={movimento.Appunti} />
+                      ))}
+                    </div>
+                  ))
+                ) : (
+                  Object.keys(filtered).map((key, i) => (
+                    <div className="box-temporale">
+                      <SayMese render={true} label={key} />
+                      {filtered[key].map(movimento => (
+                        <Box key={movimento.id} motivo={movimento.Motivo} data={movimento.Data} prezzo={movimento.Soldi} icona={movimento.percorso} link={`/transazione/${movimento.id}`} id={movimento.id} appuntiFilter={movimento.Appunti} />
+                      ))}
+                    </div>
+                  ))
                 )
-              })
-            )
+              )
+            ) : null
           ) : (
             <div className="preloading">
               <SayMese render={true} label={`Settembre`} />

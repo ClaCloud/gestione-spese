@@ -49,7 +49,7 @@ function Transazione(props) {
   const backText = movimento.Soldi > 0 ? (<span>Versato in <b>{movimento.Metodo}</b></span>) : (<span>Pagato con <b>{movimento.Metodo}</b></span>)
 
   const ES = movimento.Soldi > 0 ? "entrata" : "spesa",
-    Soldi = movimento.Soldi ?? null,
+    Soldi = movimento.Soldi ?? '20.00',
     Appunti = movimento.Appunti ?? null,
     Motivo = movimento.Motivo ?? null,
     Metodo = movimento.Metodo ?? null,
@@ -58,6 +58,8 @@ function Transazione(props) {
     ripeti = "/add-" + ES + "/" + Categoria + "/" + Soldi + "/" + Metodo + "/" + Motivo + "/" + Spazio + "/" + Appunti;
 
   function elimina() {
+    $(".wrap-caricamento").addClass("visible");
+
     $.ajax({
       type: "POST",
       url: "/API/eliminaTransa.php",
@@ -69,8 +71,10 @@ function Transazione(props) {
       },
       success: function (response) {
         if (response == true) {
+          $(".wrap-caricamento").removeClass("visible");
           window.history.back();
         } else {
+          $(".wrap-caricamento").removeClass("visible");
           alert(response)
         }
       }
@@ -79,6 +83,7 @@ function Transazione(props) {
 
   const modifica = (event) => {
     event.preventDefault();
+    $(".wrap-caricamento").addClass("visible");
 
     const categoria = $("#categoria").val(),
       prezzo = $("input[name=prezzo]").val(),
@@ -108,9 +113,11 @@ function Transazione(props) {
       },
       success: function (response) {
         if (response == true) {
+          $(".wrap-caricamento").removeClass("visible");
           $(".modale[data-modal=modifica]").removeClass("open");
           fetchData();
         } else {
+          $(".wrap-caricamento").removeClass("visible");
           alert(response)
         }
       }

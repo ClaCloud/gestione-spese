@@ -9,7 +9,7 @@
       if ($query->num_rows == 1) {
         session_destroy();
         session_id($token);
-        session_start();
+        //session_start();
         list($_SESSION["username"], $_SESSION['tema'], $trn_date) = $query->fetch_row();
       }
     }

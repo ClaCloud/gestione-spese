@@ -13,7 +13,8 @@
 
   $spazio = (int) $_POST['idspazio'];
 
-  $bilancio = (double) $_POST["bilancio"] - $soldi;
+  $bilancio = $_POST["bilancio"] ?? 0;
+  $bilancio = (double) $bilancio - $soldi;
   $bilancio = str_replace(",", ".", $bilancio);
 
   if(isset($_POST['motivo'])){

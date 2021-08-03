@@ -10,6 +10,8 @@ function Login() {
 
   const verifyLogin = (event) => {
     event.preventDefault();
+    $(".wrap-caricamento").addClass("visible");
+
     const username = $("input[name=username]").val(),
       password = $("input[name=password]").val();
 
@@ -19,8 +21,10 @@ function Login() {
       data: { username: username, password: password },
       success: function (response) {
         if (response) {
+          $(".wrap-caricamento").removeClass("visible");
           window.location.replace("/home");
         } else {
+          $(".wrap-caricamento").removeClass("visible");
           alert("Username o Password sbagliata")
         }
       }
@@ -45,10 +49,10 @@ function Login() {
               <div className="container">
                 <div className="row no-wrap">
                   <div className="col-3-2">
-                    <button name="submit" type="submit" className="button bgprimary">Login</button>
+                    <button name="submit" type="submit" className="button bgprimary mini marbot">Login</button>
                   </div>
                   <div className="col-3">
-                    <a href="/register" className="button">New</a>
+                    <a href="/register" className="button mini marbot">Registrati</a>
                   </div>
                 </div>
               </div>

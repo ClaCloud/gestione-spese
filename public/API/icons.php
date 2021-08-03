@@ -3,6 +3,7 @@
   require("auth.php");
   require("dbconn.php");
   header("Content-type: application/json");
+  header("Cache-Control: no-store, max-age=0");
 
   $Mystica = "SELECT id, nome, percorso, colore FROM icons ORDER BY nome ASC";
   $result = $conn->query($Mystica);

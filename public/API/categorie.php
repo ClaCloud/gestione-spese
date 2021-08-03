@@ -3,6 +3,7 @@
   require("auth.php");
   require("dbconn.php");
   header("Content-type: application/json");
+  header("Cache-Control: no-store, max-age=0");
 
   $Mystica = "SELECT $username"."_categorie.id, $username"."_categorie.Categoria, icons.percorso, icons.colore
                 FROM $username"."_categorie
