@@ -832,7 +832,23 @@ html.daBlur {
     }
   }
 }
-
+#trasferimento {
+  .swap{
+    cursor: pointer;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 177px;
+    background: #2e2e2e;
+    font-size: 20px;
+    padding: 6.2px 0;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    text-align: center;
+    box-shadow: 0px 4px 10px rgba(#000, .2);
+  }
+}
 #add,
 #transazione,
 #home {

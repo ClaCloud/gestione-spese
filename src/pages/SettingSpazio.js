@@ -10,17 +10,15 @@ export default function Setting(props) {
   });
 
   const [itemsLoaded, setitemsLoaded] = useState(false);
-  const [Spazio, setSpazio] = useState([
-    {
-      "id": "2",
-      "position": "0",
-      "Abilitato": "1",
-      "Bilancio": "0.00",
-      "IDicona": "17",
-      "percorso": "/assets/img/icons/mappamondo.png",
-      "colore": "#fce0a2"
-    }
-  ]);
+  const [Spazio, setSpazio] = useState({
+    "id": "2",
+    "position": "0",
+    "Abilitato": "1",
+    "Bilancio": "0.00",
+    "IDicona": "17",
+    "percorso": "/assets/img/icons/mappamondo.png",
+    "colore": "#fce0a2"
+  });
 
   const id = props.match.params.id;
 
@@ -40,11 +38,11 @@ export default function Setting(props) {
       });
   }
 
-  const nome = Spazio[0].Nome,
-    icona = Spazio[0].IDicona,
-    percorso = Spazio[0].percorso,
-    colore = Spazio[0].colore,
-    abilitato = Spazio[0].Abilitato;
+  const nome = Spazio.Nome,
+    icona = Spazio.IDicona,
+    percorso = Spazio.percorso,
+    colore = Spazio.colore,
+    abilitato = Spazio.Abilitato;
 
   const UpdateSpazio = (event) => {
     event.preventDefault();

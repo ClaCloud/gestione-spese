@@ -7,6 +7,19 @@ import $, { jQuery } from 'jquery';
 import Cookies from 'universal-cookie';
 
 const Home = () => {
+
+  const [itemsLoaded, setitemsLoaded] = useState(false);
+  const [movimenti, setMovimenti] = useState([]);
+  const [search, setSearch] = useState({ text: "", date: "", categoria: "", metodo: "" });
+  const [filtered, setFiltered] = useState([]);
+  const [metodi, setMetodi] = useState([{
+    "id": "1",
+    "metodo": "Contanti",
+    "totale": "0",
+    "visibile": "1"
+  }]);
+  const [categorie, setCategorie] = useState([]);
+
   useEffect(() => {
 
     if (cookies.get('blur')) {
@@ -29,6 +42,7 @@ const Home = () => {
         $(".add-new").animate({
           bottom: "77px"
         }, 300);
+        setSearch({ text: "", date: "", categoria: "", metodo: "" });
         setFiltered([]);
       } else {
         $(this).parent(".cerca").addClass("open");
@@ -40,12 +54,9 @@ const Home = () => {
         $(".add-new").animate({
           bottom: "-70px"
         }, 300).children(".container").children(".clickme").removeClass("clicked");
-        search();
+        //Search();
       }
     });
-    $("#filter").on("input", function () {
-      search($(this).val());
-    })
 
     $(".fa-eye-change").on("click", function () {
       const current = new Date();
@@ -78,34 +89,51 @@ const Home = () => {
     }
   }
 
-  const [itemsLoaded, setitemsLoaded] = useState(false);
-  const [movimenti, setMovimenti] = useState([]);
-  const [filtered, setFiltered] = useState([]);
-  const [metodi, setMetodi] = useState([{
-    "id": "1",
-    "metodo": "Contanti",
-    "totale": "0",
-    "visibile": "1"
-  }]);
+  const Search = (e) => {
+    switch (e.currentTarget.name) {
+      case 'filter':
+        setSearch({ ...search, text: e.currentTarget.value });
+        break;
+      case 'data-filter':
+        setSearch({ ...search, date: e.currentTarget.value });
+        break;
+      case 'categoria-filter':
+        setSearch({ ...search, categoria: e.currentTarget.value });
+        break;
+      case 'metodo-filter':
+        setSearch({ ...search, metodo: e.currentTarget.value });
+        break;
+      default:
+        console.log(`Sorry, we are out of ${e.currentTarget.name}.`);
+    }
+  }
+  useEffect(() => {
+    if (search.text !== '' || search.date !== '' || search.categoria !== '' || search.metodo !== '') {
+      $.ajax({
+        type: "POST",
+        url: `/API/transazioni.php`,
+        data: {
+          cerca: true,
+          text: search.text,
+          date: search.date,
+          categoria: search.categoria,
+          metodo: search.metodo
+        },
+        success: function (response) {
+          setFiltered(response);
+        }
+      });
+    }
+  }, [search]);
 
-  const search = (data) => {
+  const fetchData = () => {
     Promise.all([
-      fetch(`/API/transazioni.php?cerca=${data}`, {
+      fetch('/API/categorie.php', {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
         }
-      })
-    ])
-      .then(([res1]) => Promise.all([res1.json()]))
-      .then(([data1]) => {
-        setFiltered(data1);
-      });
-
-  };
-
-  const fetchData = () => {
-    Promise.all([
+      }),
       fetch('/API/metodi.php', {
         headers: {
           'Content-Type': 'application/json',
@@ -119,10 +147,11 @@ const Home = () => {
         }
       })
     ])
-      .then(([res1, res2]) => Promise.all([res1.json(), res2.json()]))
-      .then(([data1, data2]) => {
-        setMovimenti(data2);
-        setMetodi(data1);
+      .then(([res1, res2, res3]) => Promise.all([res1.json(), res2.json(), res3.json()]))
+      .then(([data1, data2, data3]) => {
+        setMovimenti(data3);
+        setMetodi(data2);
+        setCategorie(data1);
         setitemsLoaded(true);
       });
   }
@@ -139,7 +168,10 @@ const Home = () => {
       <div className="top">
         <div className="container">
           <div href="#" className="roundbtn cerca">
-            <Text id="filter" nome="Cerca" />
+            <label htmlFor={`filter`} >
+              <input type="text" id={`filter`} name={`filter`} placeholder=" " maxLength="30" onChange={Search} />
+              <span className="placeholder">{`Cerca`}</span>
+            </label>
             <i className="fas fa-search"></i>
           </div>
           <div className="totale">
@@ -154,13 +186,25 @@ const Home = () => {
 
             <Data id="data-filter" name="Data" class="col-3" thin={true} />
 
-            <Select id="categoria-filter" nome="Categoria" thin={true} class="col-3">
-              <Option value="" label="Nessuna" />
-            </Select>
+            <label htmlFor={`categoria-filter`} className={`select-wrap col-3 thin`}>
+              <select id={`categoria-filter`} name={`categoria-filter`} onChange={Search}>
+                <Option value="" label="Nessuna" />
+                {categorie.map(categoria => (
+                  <Option key={categoria.id} value={categoria.id} label={categoria.Categoria} />
+                ))}
+              </select>
+              <span className="placeholder">{`Categoria`}</span>
+            </label >
 
-            <Select id="metodo-filter" nome="Metodo" thin={true} class="col-3">
-              <Option value="" label="Nessuna" />
-            </Select>
+            <label htmlFor={`metodo-filter`} className={`select-wrap col-3 thin`}>
+              <select id={`metodo-filter`} name={`metodo-filter`} onChange={Search}>
+                <Option value="" label="Nessuna" />
+                {metodi.map(metodo => (
+                  <Option key={metodo.id} value={metodo.id} label={metodo.metodo} />
+                ))}
+              </select>
+              <span className="placeholder">{`Metodo`}</span>
+            </label >
 
           </div>
         </div>
@@ -204,7 +248,7 @@ const Home = () => {
                     <div className="box-temporale">
                       <SayMese render={true} label={key} />
                       {movimenti[key].map(movimento => (
-                        <Box key={movimento.id} motivo={movimento.Motivo} data={movimento.Data} prezzo={movimento.Soldi} icona={movimento.percorso} link={`/transazione/${movimento.id}`} id={movimento.id} appuntiFilter={movimento.Appunti} />
+                        <Box key={i} motivo={movimento.Motivo} data={movimento.Data} prezzo={movimento.Soldi} icona={movimento.percorso} link={`/transazione/${movimento.id}`} id={movimento.id} appuntiFilter={movimento.Appunti} />
                       ))}
                     </div>
                   ))
@@ -213,7 +257,7 @@ const Home = () => {
                     <div className="box-temporale">
                       <SayMese render={true} label={key} />
                       {filtered[key].map(movimento => (
-                        <Box key={movimento.id} motivo={movimento.Motivo} data={movimento.Data} prezzo={movimento.Soldi} icona={movimento.percorso} link={`/transazione/${movimento.id}`} id={movimento.id} appuntiFilter={movimento.Appunti} />
+                        <Box key={i} motivo={movimento.Motivo} data={movimento.Data} prezzo={movimento.Soldi} icona={movimento.percorso} link={key === 'risultati' ? '' : `/transazione/${movimento.id}`} id={movimento.id} appuntiFilter={movimento.Appunti} />
                       ))}
                     </div>
                   ))

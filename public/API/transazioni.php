@@ -6,9 +6,8 @@
 
   $id = $_REQUEST['transazione'] ?? false;
   $spazio = $_REQUEST['spazio'] ?? false;
-  $cerca = $_REQUEST['cerca'] ?? false;
-  $categoria = $_REQUEST['categoria'] ?? false;
-  $metodo = $_REQUEST['metodo'] ?? false;
+
+  $cerca = $_POST['cerca'] ?? false;
 
   if ($id) {
     $Mystica = "
@@ -56,6 +55,11 @@
     }
     exit();
   } elseif ($cerca){
+    $text = $_POST['text'] ?? false;
+    $date = $_POST['date'] ?? false;
+    $categoria = $_POST['categoria'] ?? false;
+    $metodo = $_POST['metodo'] ?? false;
+
     $Mystica = "
     SELECT $username"."_movimenti.id,
            $username"."_movimenti.Motivo,
@@ -74,8 +78,26 @@
     LEFT JOIN $username"."_metodipagamento ON $username"."_movimenti.IDMetodo = $username"."_metodipagamento.id
     LEFT JOIN icons ON $username"."_categorie.IDicona = icons.id
     WHERE $username"."_metodipagamento.abilitato=1
-      AND $username"."_movimenti.Motivo LIKE '%$cerca%'
-      OR $username"."_movimenti.Appunti LIKE '%$cerca%'
+    ";
+    if($text){
+      $Mystica=$Mystica."
+        AND ($username"."_movimenti.Motivo LIKE '%$text%' OR $username"."_movimenti.Appunti LIKE '%$text%')
+      ";
+    }
+    if($categoria){
+      $Mystica=$Mystica."
+        AND $username"."_movimenti.IDCategoria = $categoria
+      ";
+    }
+    if($date){
+      $Mystica=$Mystica."";
+    }
+    if($metodo){
+      $Mystica=$Mystica."
+        AND $username"."_movimenti.IDMetodo = $metodo
+      ";
+    }
+    $Mystica=$Mystica."
     ORDER BY $username"."_movimenti.Data DESC, $username"."_movimenti.id DESC
     ";
   } elseif ($spazio) {
@@ -152,7 +174,6 @@
         $soldi = $soldi + $row['Soldi'];
         $globnum++;
         $J["risultati"][0]=[
-          "id"=>0,
           "Motivo"=>"$globnum Transazioni",
           "Soldi"=>$soldi,
           "percorso"=>'/assets/img/search.png'
@@ -175,7 +196,6 @@
     }
   }elseif($cerca){
     $J["risultati"][0]=[
-      "id"=>0,
       "Motivo"=>"0 Transazioni",
       "Soldi"=>0,
       "percorso"=>'/assets/img/search.png'

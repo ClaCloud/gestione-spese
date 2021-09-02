@@ -15,8 +15,8 @@ function Transazione(props) {
   }, [])
 
   const [itemsLoaded, setitemsLoaded] = useState(false);
-  const [movimento, setMovimento] = useState([]);
-  const [spazio, setSpazio] = useState([]);
+  const [movimento, setMovimento] = useState({});
+  const [spazio, setSpazio] = useState({});
 
   const fetchData = () => {
     Promise.all([
@@ -39,9 +39,9 @@ function Transazione(props) {
             }
           })
         ])
-          .then(([res1]) => Promise.all([res1.json()]))
-          .then(([data1]) => {
-            setSpazio(data1);
+          .then(([res2]) => Promise.all([res2.json()]))
+          .then(([data2]) => {
+            setSpazio(data2);
           })
       })
   }

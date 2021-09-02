@@ -90,7 +90,6 @@ export function Soldi(props) {
 
     function inputWidth(elem, minW, maxW) {
       elem = $(this);
-      console.log(elem)
     }
 
     $('.width-dynamic').on('input change click ', function () {
@@ -138,10 +137,15 @@ export function Data(props) {
   const nome = props.nome;
   const required = props.required ?? false;
   const className = thin +" "+ props.class;
-  const data = props.data ?? Date();
+
+  const [data, setData] = useState(Date());
+
+  useEffect(() => {
+    setData(props.data);
+  }, [props]);
   return (
     <label htmlFor={id} className={className} >
-      <input type="date" name={id} placeholder="yyyy-mm-dd" defaultValue={dateFormat(data, "yyyy-mm-dd")} required={required} />
+      <input type="date" name={id} placeholder="yyyy-mm-dd" value={dateFormat(data, "yyyy-mm-dd")} onChange={(event) => setData(event.target.value)} required={required} />
       <span className="placeholder">{nome}</span>
     </label>
   )

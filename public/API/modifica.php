@@ -17,7 +17,7 @@
   $bilancio = (double) $bilancio - $soldi;
   $bilancio = str_replace(",", ".", $bilancio);
 
-  if(isset($_POST['motivo'])){
+  if (isset($_POST['motivo']) && isset($_POST['prezzo'])){
     $sql = "UPDATE $username"."_metodipagamento SET totale = '$totale' WHERE id = $metodo;";
     $result = $conn->query($sql);
     if($result){
@@ -98,4 +98,6 @@
     }else{
       echo "Errore in update metodo 1:  ".$conn->error;
     }
+  } else {
+    echo "Dati mancanti: Completa tutti i campi";
   }

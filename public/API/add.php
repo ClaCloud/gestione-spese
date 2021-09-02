@@ -3,7 +3,7 @@
   require("auth.php");
   require("dbconn.php");
 
-  if (isset($_POST['tipo'])){
+  if (isset($_POST['motivo']) && isset($_POST['prezzo'])){
     // removes backslashes
 
     $data = stripslashes($_REQUEST['data']);
@@ -14,17 +14,14 @@
     
     $metodo = (int) stripslashes($_REQUEST['metodo']);
     $metodo = mysqli_real_escape_string($conn,$metodo);
-    
-    $prezzo = (float) stripslashes($_REQUEST['prezzo']);
-    $prezzo = mysqli_real_escape_string($conn,$prezzo);
 
-    if($_REQUEST['tipo'] === "entrata"){
-      $prezzo = str_replace("-", "", $prezzo);
-    } else {
-      $prezzo = str_replace("-", "", $prezzo);
+    $prezzo = stripslashes($_REQUEST['prezzo']);
+    $prezzo = mysqli_real_escape_string($conn,$prezzo);
+    $prezzo = str_replace("-", "", $prezzo);
+    $prezzo = str_replace(",", ".", $prezzo);
+    if($_REQUEST['tipo'] === "spesa"){
       $prezzo = "-".$prezzo;
     }
-    $prezzo = str_replace(",", ".", $prezzo);
     
     $categoria = (int) stripslashes($_REQUEST['categoria']);
     $categoria = mysqli_real_escape_string($conn,$categoria);
@@ -97,6 +94,6 @@
       echo "ERROR in insert: ".$conn->error;
     }
   } else {
-    echo "Errore: entrata o spesa?";
+    echo "Dati mancanti: Completa tutti i campi";
   }
         

@@ -20,6 +20,23 @@
       LEFT JOIN icons ON $username"."_spazi.IDicona = icons.id
     WHERE $username"."_spazi.id=$id
     ";
+    $result = $conn->query($Mystica);
+    $J=[];
+    if ($result->num_rows == 1) {
+      $row = $result->fetch_assoc();
+      $J = array(
+        "id"=>$row['id'],
+        "position"=>$row['position'],
+        "Nome"=>$row['Nome'],
+        "Abilitato"=>$row['Abilitato'],
+        "Bilancio"=>$row['Bilancio'],
+        "IDicona"=>$row['IDicona'],
+        "percorso"=>$row['percorso'],
+        "colore"=>$row['colore']
+      );
+      echo json_encode($J);
+    }
+    exit();
   } elseif (isset($_GET['abilitato'])) {
     $abilitato = $_GET['abilitato'];
     $Mystica = "

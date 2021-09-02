@@ -15,18 +15,16 @@ function Spazi(props) {
   }, []);
 
   const [itemsLoaded, setitemsLoaded] = useState(false);
-  const [Spazio, setSpazio] = useState([
-    {
-      "id": "2",
-      "position": "0",
-      "Nome": "Crociera Lipari-Vulcano Agosto 2020",
-      "Abilitato": "1",
-      "Bilancio": "0.00",
-      "IDicona": "17",
-      "percorso": "/assets/img/icons/mappamondo.png",
-      "colore": "#fce0a2"
-    }
-  ]);
+  const [Spazio, setSpazio] = useState({
+    "id": "2",
+    "position": "0",
+    "Nome": "Crociera Lipari-Vulcano Agosto 2020",
+    "Abilitato": "1",
+    "Bilancio": "0.00",
+    "IDicona": "17",
+    "percorso": "/assets/img/icons/mappamondo.png",
+    "colore": "#fce0a2"
+  });
   const [movimenti, setMovimenti] = useState([]);
 
   const fetchData = () => {
@@ -90,14 +88,14 @@ function Spazi(props) {
           <i className="fas fa-cog"></i>
         </Link>
       } />
-      <div className="top" style={{ background: Spazio[0].colore }} >
-        <img src={Spazio[0].percorso} alt="" />
+      <div className="top" style={{ background: Spazio.colore }} >
+        <img src={Spazio.percorso} alt="" />
       </div>
       <div className="frame">
         <div className="container">
           <div className="info-spazio">
-            <span className="nome">{Spazio[0].Nome}</span>
-            <CurrencyFormat value={Spazio[0].Bilancio} isNumericString={true} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} decimalScale={2} fixedDecimalScale={true} renderText={value =>
+            <span className="nome">{Spazio.Nome}</span>
+            <CurrencyFormat value={Spazio.Bilancio} isNumericString={true} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} decimalScale={2} fixedDecimalScale={true} renderText={value =>
               <span className="bilancio">
                 € {value}
               </span>

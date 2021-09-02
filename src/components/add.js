@@ -51,7 +51,6 @@ export default function AddComponent(props) {
     selectedMetodo = props.selectedMetodo,
     selectedSpazio = props.selectedSpazio;
 
-
   return (
     <div>
 
