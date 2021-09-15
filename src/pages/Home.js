@@ -184,7 +184,7 @@ const Home = () => {
           </div>
           <div className="cerca-2 row">
 
-            <Data id="data-filter" name="Data" class="col-3" thin={true} />
+            {/* <Data id="data-filter" name="Data" class="col-3" thin={true} /> */}
 
             <label htmlFor={`categoria-filter`} className={`select-wrap col-3 thin`}>
               <select id={`categoria-filter`} name={`categoria-filter`} onChange={Search}>

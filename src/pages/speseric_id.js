@@ -1,31 +1,29 @@
 import React, { useState, useEffect } from 'react';
-import { Soldi, Text } from '../components/inputs';
+import { Soldi, Text, Data } from '../components/inputs';
 import Box from '../components/box';
 import BackBar from '../components/backbar';
 import Modale from '../components/modale';
-import $, { jQuery } from 'jquery';
+import $ from 'jquery';
 
-function DebCred_id(props) {
+function SpeseRic_id(props) {
 
   const id = props.match.params.id;
 
   useEffect(() => {
     fetchData();
-  }, [])
+  })
 
   const [itemsLoaded, setitemsLoaded] = useState(false);
-  const [debcred, setDebcred] = useState({
-    "id": "1",
-    "tipo": "1",
-    "persona": "Marco Parrinello",
-    "motivo": "Mamma",
-    "valuta": "20.00",
-    "data": "2021-07-29 11:13:41"
+  const [speseric, setSpeseric] = useState({
+    "periodo": "1",
+    "motivo": "motivo",
+    "costo": 20,
+    "rinnovo": "2021-07-29 11:13:41"
   });
 
   const fetchData = () => {
     Promise.all([
-      fetch(`/API/debcred.php?id=${id}`, {
+      fetch(`/API/speseric.php?id=${id}`, {
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json'
@@ -34,19 +32,19 @@ function DebCred_id(props) {
     ])
       .then(([res1]) => Promise.all([res1.json()]))
       .then(([data1]) => {
-        setDebcred(data1);
+        setSpeseric(data1);
         setitemsLoaded(true);
       })
   }
 
-  const backText = debcred.tipo == 0 ? (<span><b>Debito</b></span>) : (<span><b>Credito</b></span>)
+  const backText = speseric.periodo == 0 ? (<span><b>Mensile</b></span>) : (<span><b>Annuale</b></span>)
 
   function elimina() {
     $(".wrap-caricamento").addClass("visible");
 
     $.ajax({
       type: "POST",
-      url: "/API/el-debcred.php",
+      url: "/API/el-speseric.php",
       data: {
         id: id
       },
@@ -66,20 +64,20 @@ function DebCred_id(props) {
     event.preventDefault();
     $(".wrap-caricamento").addClass("visible");
 
-    const tipo = $("#tipo").val(),
-      persona = $("#persona").val(),
-      valuta = $("input[name=prezzo]").val(),
-      motivo = $("#motivo").val();
+    const periodo = $("#periodo").val(),
+      motivo = $("#motivo").val(),
+      costo = $("input[name=prezzo]").val(),
+      rinnovo = $("#rinnovo").val();
 
     $.ajax({
       type: "POST",
-      url: "/API/mod-debcred.php",
+      url: "/API/mod-speseric.php",
       data: {
         id: id,
-        tipo: tipo,
-        persona: persona,
-        valuta: valuta,
+        periodo: periodo,
         motivo: motivo,
+        costo: costo,
+        rinnovo: rinnovo,
       },
       success: function (response) {
         if (response == true) {
@@ -98,12 +96,13 @@ function DebCred_id(props) {
     <div id="transazione" className={itemsLoaded ? (null) : ('preloading')}>
       <Modale
         dataModale="elimina"
+        className="full"
         content={
           <div>
             <div className="row">
               <div className="col">
                 <h3>Elimina</h3>
-                <p>Sei sicuro di voler eliminare questo {backText}?</p>
+                <p>Sei sicuro di voler eliminare questa Spesa {backText}?</p>
               </div>
             </div>
             <div className="row no-wrap">
@@ -120,22 +119,23 @@ function DebCred_id(props) {
 
       <Modale
         dataModale="modifica"
+        className="full"
         content={
           <form onSubmit={modifica}>
-            <div className="row">
 
-              <label htmlFor="tipo" className="col-2 select-wrap marbot">
-                <select id="tipo" name="tipo">
-                  <option value="0" selected={debcred.tipo == 0 ? true : false} >Debito</option>
-                  <option value="1" selected={debcred.tipo == 1 ? true : false} >Credito</option>
-                </select>
-                <span className="placeholder">Tipo</span>
-              </label>
-              <Text id="persona" nome="Persona" data={debcred.persona} required={true} className="col-2" />
-            </div>
+            <label htmlFor="periodo" className="col-2 select-wrap marbot">
+              <select id="periodo" name="periodo">
+                <option value="0" selected={speseric.periodo == 0 ? true : false} >Mensile</option>
+                <option value="1" selected={speseric.periodo == 1 ? true : false} >Annuale</option>
+              </select>
+              <span className="placeholder">Periodo</span>
+            </label>
 
-            <Soldi data={debcred.valuta} />
-            <Text id="motivo" nome="Motivo" data={debcred.motivo} required={true} />
+            <Soldi data={speseric.costo} />
+            <Text id="motivo" nome="Motivo" data={speseric.motivo} required={true} />
+
+            <Data id="rinnovo" nome="rinnovo" data={speseric.rinnovo} required={true} />
+
             <div className="row no-wrap">
               <div className="col-3-2">
                 <button type="submit" className="button mini bgprimary">Aggiungi</button>
@@ -148,13 +148,13 @@ function DebCred_id(props) {
         }
       />
 
-      <BackBar text={backText} />
+      <BackBar text={"Spese Ricorrenti"} />
 
       <div className="container">
 
-        <Box categoria={debcred.persona ?? "Persona"} />
+        <Box categoria={backText} />
 
-        <Box motivo={debcred.motivo ?? "Motivo Random"} data={debcred.data ?? "2021-05-27"} prezzo={debcred.valuta ?? "200"} />
+        <Box motivo={speseric.motivo ?? "Motivo Random"} nonData="Rinnovo: " data={speseric.rinnovo} prezzo={speseric.costo} />
 
         <div className="fixed bot">
           <div className="container">
@@ -174,4 +174,4 @@ function DebCred_id(props) {
   );
 }
 
-export default DebCred_id;
+export default SpeseRic_id;

@@ -132,11 +132,11 @@ export function Soldi(props) {
 }
 
 export function Data(props) {
-  const thin = props.thin ? "thin" : null;
+  const thin = props.thin ? "thin" : "";
   const id = props.id;
   const nome = props.nome;
   const required = props.required ?? false;
-  const className = thin +" "+ props.class;
+  const className = thin +" "+ props.class ? props.class : "";
 
   const [data, setData] = useState(Date());
 
@@ -145,7 +145,7 @@ export function Data(props) {
   }, [props]);
   return (
     <label htmlFor={id} className={className} >
-      <input type="date" name={id} placeholder="yyyy-mm-dd" value={dateFormat(data, "yyyy-mm-dd")} onChange={(event) => setData(event.target.value)} required={required} />
+      <input type="date" id={id} name={id} placeholder="yyyy-mm-dd" value={dateFormat(data, "yyyy-mm-dd")} onChange={(event) => setData(event.target.value)} required={required} />
       <span className="placeholder">{nome}</span>
     </label>
   )

@@ -42,18 +42,14 @@ function Box(props) {
 						{motivo}
 					</div>
 
-					{data !== undefined ? (
-						<div className="data">
-							{dateFormat(data, "dd mmmm yyyy")}
-						</div>
-					) : (null)}
-
-					{nonData !== undefined ? (
-						<div className="data">
-							{nonData}
-						</div>
-					) : (null)}
-
+					<div className="data">
+						{nonData !== undefined ? (
+							nonData
+						) : (null)}
+						{data !== undefined ? (
+							dateFormat(data, "dd mmmm yyyy")
+						) : (null)}
+					</div>
 				</div>
 			) : (null)}
 
@@ -62,7 +58,7 @@ function Box(props) {
 					<div className={`prezzo daBlur ${prezzo > 0 ? ('green') : ('alert')}`}>
 						€ {value}
 					</div>
-				}/>
+				} />
 			) : (null)}
 
 			{nonPrezzo !== undefined ? (

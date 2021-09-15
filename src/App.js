@@ -25,6 +25,8 @@ import Profilo from './pages/Profilo';
 import AddMetodo from './pages/AddMetodo';
 import DebCred from './pages/debcred';
 import DebCred_id from './pages/debcred_id';
+import SpeseRic from './pages/speseric';
+import SpeseRic_id from './pages/speseric_id';
 
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import $, { jQuery } from 'jquery';
@@ -140,6 +142,8 @@ function App() {
           <Route exact path="/profilo/new-metodo" component={AddMetodo} />
           <Route exact path="/profilo/debcred" component={DebCred} />
           <Route exact path="/profilo/debcred/:id" component={DebCred_id} />
+          <Route exact path="/profilo/speseric" component={SpeseRic} />
+          <Route exact path="/profilo/speseric/:id" component={SpeseRic_id} />
 
           <Route>
             <E404 />
