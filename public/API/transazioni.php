@@ -57,6 +57,7 @@
   } elseif ($cerca){
     $text = $_POST['text'] ?? false;
     $date = $_POST['date'] ?? false;
+    $mese = $_POST['mese'] ?? false;
     $categoria = $_POST['categoria'] ?? false;
     $metodo = $_POST['metodo'] ?? false;
 
@@ -91,6 +92,14 @@
     }
     if($date){
       $Mystica=$Mystica."";
+    }
+    if($mese){
+      $data_inizio=date("Y-m-01",strtotime($mese));
+      $data_fine = date('Y-m-d', strtotime("+1 months", strtotime($data_inizio)));
+      $data_fine = date('Y-m-d', strtotime("-1 day", strtotime($data_fine)));
+      $Mystica=$Mystica."
+      AND $username"."_movimenti.Data BETWEEN '$data_inizio' and '$data_fine'
+      ";
     }
     if($metodo){
       $Mystica=$Mystica."

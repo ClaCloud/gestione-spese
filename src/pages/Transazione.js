@@ -126,6 +126,28 @@ function Transazione(props) {
 
   return (
     <div id="transazione" className={itemsLoaded ? (null) : ('preloading')}>
+      {movimento.Motivo ? (
+        <Modale
+          dataModale="modifica"
+          content={
+            <form onSubmit={modifica}>
+              <div className="row">
+                <div className="col">
+                  <AddComponent soldi={movimento.Soldi} data={movimento.Data} motivo={movimento.Motivo} appunti={movimento.Appunti} selectedMetodo={movimento.Metodo} selectedCategoria={movimento.Categoria} selectedSpazio={spazio.Nome} />
+                </div>
+              </div>
+              <div className="row no-wrap">
+                <div className="col-3-2">
+                  <button type="submit" className="button mini bgprimary">Modifica</button>
+                </div>
+                <div className="col-3">
+                  <a className="button mini close-modal bgalert" data-modal="modifica">Annulla</a>
+                </div>
+              </div>
+            </form>
+          }
+        />
+      ) : null}
       <Modale
         dataModale="elimina"
         content={
@@ -145,27 +167,6 @@ function Transazione(props) {
               </div>
             </div>
           </div>
-        }
-      />
-
-      <Modale
-        dataModale="modifica"
-        content={
-          <form onSubmit={modifica}>
-            <div className="row">
-              <div className="col">
-                <AddComponent soldi={movimento.Soldi} data={movimento.Data} motivo={movimento.Motivo} appunti={movimento.Appunti} selectedMetodo={movimento.Metodo} selectedCategoria={movimento.Categoria} selectedSpazio={spazio.Nome} />
-              </div>
-            </div>
-            <div className="row no-wrap">
-              <div className="col-3-2">
-                <button type="submit" className="button mini bgprimary">Modifica</button>
-              </div>
-              <div className="col-3">
-                <a className="button mini close-modal bgalert" data-modal="modifica">Annulla</a>
-              </div>
-            </div>
-          </form>
         }
       />
 

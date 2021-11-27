@@ -12,6 +12,7 @@ function Box(props) {
 	const className = props.className ?? "";
 	const prezzo = props.prezzo;
 	const nonPrezzo = props.nonPrezzo;
+	const dataPrezzo = props.dataPrezzo;
 	const metodo = props.metodo;
 	const categoria = props.categoria;
 	const categoriaFilter = props.categoriaFilter;
@@ -67,6 +68,12 @@ function Box(props) {
 				</div>
 			) : (null)}
 
+			{dataPrezzo !== undefined ? (
+				<div className={`prezzo`}>
+					{dateFormat(dataPrezzo, "dd mmmm yyyy")}
+				</div>
+			) : (null)}
+
 			{categoria !== undefined ? (
 				<div className="categoria">
 					{categoria}
@@ -74,8 +81,8 @@ function Box(props) {
 			) : (null)}
 
 			{appunti !== undefined ? (
-				<div className="appunti">
-					{appunti}
+				<div className="appunti" dangerouslySetInnerHTML={{ __html: appunti }}>
+
 				</div>
 			) : (null)}
 		</Link>

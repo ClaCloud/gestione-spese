@@ -11,15 +11,10 @@ function SpeseRic_id(props) {
 
   useEffect(() => {
     fetchData();
-  })
+  }, [])
 
   const [itemsLoaded, setitemsLoaded] = useState(false);
-  const [speseric, setSpeseric] = useState({
-    "periodo": "1",
-    "motivo": "motivo",
-    "costo": 20,
-    "rinnovo": "2021-07-29 11:13:41"
-  });
+  const [speseric, setSpeseric] = useState({ "periodo": "1" });
 
   const fetchData = () => {
     Promise.all([
@@ -94,6 +89,39 @@ function SpeseRic_id(props) {
 
   return (
     <div id="transazione" className={itemsLoaded ? (null) : ('preloading')}>
+      {speseric.motivo ? (
+        <Modale
+          dataModale="modifica"
+          className="full"
+          content={
+            <form onSubmit={modifica}>
+
+              <label htmlFor="periodo" className="col-2 select-wrap marbot">
+                <select id="periodo" name="periodo">
+                  <option value="0" selected={speseric.periodo == 0 ? true : false} >Mensile</option>
+                  <option value="1" selected={speseric.periodo == 1 ? true : false} >Annuale</option>
+                </select>
+                <span className="placeholder">Periodo</span>
+              </label>
+
+              <Soldi data={speseric.costo} />
+              <Text id="motivo" nome="Motivo" data={speseric.motivo} required={true} />
+
+              <Data id="rinnovo" nome="rinnovo" data={speseric.rinnovo} required={true} />
+
+              <div className="row no-wrap">
+                <div className="col-3-2">
+                  <button type="submit" className="button mini bgprimary">Modifica</button>
+                </div>
+                <div className="col-3">
+                  <a className="button mini close-modal bgalert" data-modal="modifica">Annulla</a>
+                </div>
+              </div>
+            </form>
+          }
+        />
+      ) : null}
+
       <Modale
         dataModale="elimina"
         className="full"
@@ -114,37 +142,6 @@ function SpeseRic_id(props) {
               </div>
             </div>
           </div>
-        }
-      />
-
-      <Modale
-        dataModale="modifica"
-        className="full"
-        content={
-          <form onSubmit={modifica}>
-
-            <label htmlFor="periodo" className="col-2 select-wrap marbot">
-              <select id="periodo" name="periodo">
-                <option value="0" selected={speseric.periodo == 0 ? true : false} >Mensile</option>
-                <option value="1" selected={speseric.periodo == 1 ? true : false} >Annuale</option>
-              </select>
-              <span className="placeholder">Periodo</span>
-            </label>
-
-            <Soldi data={speseric.costo} />
-            <Text id="motivo" nome="Motivo" data={speseric.motivo} required={true} />
-
-            <Data id="rinnovo" nome="rinnovo" data={speseric.rinnovo} required={true} />
-
-            <div className="row no-wrap">
-              <div className="col-3-2">
-                <button type="submit" className="button mini bgprimary">Aggiungi</button>
-              </div>
-              <div className="col-3">
-                <a className="button mini close-modal bgalert" data-modal="modifica">Annulla</a>
-              </div>
-            </div>
-          </form>
         }
       />
 

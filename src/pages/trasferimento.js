@@ -125,7 +125,7 @@ export default function Trasferimento() {
         <form onSubmit={transfer}>
           <Soldi />
           <div class="row no-wrap">
-            <label for="metodo1" class="col-2 select-wrap">
+            <label htmlFor="metodo1" class="col-2 select-wrap">
               <select id="metodo1" name="metodo1" class="metodini">
                 <option value={0} >Seleziona un conto</option>
                 {metodi.map(metodo => (
@@ -134,7 +134,7 @@ export default function Trasferimento() {
               </select>
               <span class="placeholder">Da</span>
             </label>
-            <label for="metodo2" class="col-2 select-wrap">
+            <label htmlFor="metodo2" class="col-2 select-wrap">
               <select id="metodo2" name="metodo2" class="metodini">
                 <option value={0} >Seleziona un conto</option>
                 {metodi.map(metodo => (

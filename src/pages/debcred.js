@@ -174,14 +174,14 @@ function DebCred() {
               </div>
             ) : null}
             {debcred.debiti.hidden === true ? (
-              debcred.debiti.hidden === true ? (
+              debcred.crediti.hidden === true ? (
                 <div className="col">
                 <div className="box" style={{ display: "block", maxWidth: "600px", margin: "20px auto" }}>
                   <div className="icona center" style={{ fontSize: "50px" }}>
                     <i className="fas fa-business-time"></i>
                   </div>
                   <div className="testo center">
-                    Aggiungi le spese riccorrenti che esegui, ad esempio gli abbonamenti di Netflix e Spotify
+                    Aggiungi i debiti o credi che hai verso gli altri, così da non dimenticare nulla
                   </div>
                 </div>
               </div>

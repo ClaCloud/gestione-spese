@@ -15,12 +15,7 @@ function DebCred_id(props) {
 
   const [itemsLoaded, setitemsLoaded] = useState(false);
   const [debcred, setDebcred] = useState({
-    "id": "1",
-    "tipo": "1",
-    "persona": "Marco Parrinello",
-    "motivo": "Mamma",
-    "valuta": "20.00",
-    "data": "2021-07-29 11:13:41"
+    "tipo": "1"
   });
 
   const fetchData = () => {
@@ -96,6 +91,38 @@ function DebCred_id(props) {
 
   return (
     <div id="transazione" className={itemsLoaded ? (null) : ('preloading')}>
+      {debcred.motivo ? (
+        <Modale
+          dataModale="modifica"
+          content={
+            <form onSubmit={modifica}>
+              <div className="row">
+
+                <label htmlFor="tipo" className="col-2 select-wrap marbot">
+                  <select id="tipo" name="tipo">
+                    <option value="0" selected={debcred.tipo == 0 ? true : false} >Debito</option>
+                    <option value="1" selected={debcred.tipo == 1 ? true : false} >Credito</option>
+                  </select>
+                  <span className="placeholder">Tipo</span>
+                </label>
+                <Text id="persona" nome="Persona" data={debcred.persona} required={true} className="col-2" />
+              </div>
+
+              <Soldi data={debcred.valuta} />
+              <Text id="motivo" nome="Motivo" data={debcred.motivo} required={true} />
+              <div className="row no-wrap">
+                <div className="col-3-2">
+                  <button type="submit" className="button mini bgprimary">Aggiungi</button>
+                </div>
+                <div className="col-3">
+                  <a className="button mini close-modal bgalert" data-modal="modifica">Annulla</a>
+                </div>
+              </div>
+            </form>
+          }
+        />
+      ) : null}
+
       <Modale
         dataModale="elimina"
         content={
@@ -115,36 +142,6 @@ function DebCred_id(props) {
               </div>
             </div>
           </div>
-        }
-      />
-
-      <Modale
-        dataModale="modifica"
-        content={
-          <form onSubmit={modifica}>
-            <div className="row">
-
-              <label htmlFor="tipo" className="col-2 select-wrap marbot">
-                <select id="tipo" name="tipo">
-                  <option value="0" selected={debcred.tipo == 0 ? true : false} >Debito</option>
-                  <option value="1" selected={debcred.tipo == 1 ? true : false} >Credito</option>
-                </select>
-                <span className="placeholder">Tipo</span>
-              </label>
-              <Text id="persona" nome="Persona" data={debcred.persona} required={true} className="col-2" />
-            </div>
-
-            <Soldi data={debcred.valuta} />
-            <Text id="motivo" nome="Motivo" data={debcred.motivo} required={true} />
-            <div className="row no-wrap">
-              <div className="col-3-2">
-                <button type="submit" className="button mini bgprimary">Aggiungi</button>
-              </div>
-              <div className="col-3">
-                <a className="button mini close-modal bgalert" data-modal="modifica">Annulla</a>
-              </div>
-            </div>
-          </form>
         }
       />
 

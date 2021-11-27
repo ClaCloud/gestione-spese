@@ -47,11 +47,14 @@ function Profilo() {
 
     $('#root').on("click", ".visi-metod", function () {
       var idMetodo = $(this).attr("data-metod");
+      $(".wrap-caricamento").addClass("visible");
+
       $.ajax({
         type: "POST",
         url: "/API/visi-metod.php",
         data: { idMetodo: idMetodo },
         success: function (response) {
+          $(".wrap-caricamento").removeClass("visible");
           if (response == true) {
             fetchMetodi();
           } else {
@@ -180,12 +183,12 @@ function Profilo() {
                       <p>Modifica il nome o il saldo di <b>{modalMetodo.metodo}</b></p>
                     </div>
                   </div>
-                  <label for="metodo">
+                  <label htmlFor="metodo">
                     <input type="text" name="metodo" id="metodo" placeholder=" " defaultValue={modalMetodo.metodo} required />
                     <span className="placeholder">Nuovo Nome</span>
                   </label>
-                  <label for="totale">
-                    <input type="text" name="totale" id="totale" placeholder=" " className="numeric" defaultValue={modalMetodo.totale} maxlength="10" inputmode="decimal" required />
+                  <label htmlFor="totale">
+                    <input type="text" name="totale" id="totale" placeholder=" " className="numeric" defaultValue={modalMetodo.totale} maxLength="10" inputMode="decimal" required />
                     <span className="placeholder">Nuovo saldo</span>
                   </label>
                 </div>
@@ -265,7 +268,7 @@ function Profilo() {
 
           <Box link={`/profilo/debcred`} icona={'/assets/img/check.png'} motivo={'Debiti e Crediti'} nonData={`Inserisci i debiti o i crediti che hai, così da non dimenticare nulla`} nonPrezzo={<i className="fas fa-chevron-right"></i>} />
 
-          <Box link={`/profilo/speseric`} icona={'/assets/img/ricorrente.png'} motivo={'Spese Ricorrenti'} nonData={`Inserisci spese con cadenza mensile o annuale`} nonPrezzo={<i className="fas fa-chevron-right"></i>} />
+          <Box link={`/profilo/speseric`} icona={'/assets/img/ricorrente.png'} motivo={'Spese Fisse'} nonData={`Inserisci spese con cadenza mensile o annuale`} nonPrezzo={<i className="fas fa-chevron-right"></i>} />
 
           <h3 className="say-mese auTop" >Impostazioni</h3>
 

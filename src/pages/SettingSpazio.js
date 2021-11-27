@@ -7,7 +7,7 @@ export default function Setting(props) {
 
   useEffect(() => {
     fetchData();
-  });
+  }, []);
 
   const [itemsLoaded, setitemsLoaded] = useState(false);
   const [Spazio, setSpazio] = useState({

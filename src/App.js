@@ -27,6 +27,7 @@ import DebCred from './pages/debcred';
 import DebCred_id from './pages/debcred_id';
 import SpeseRic from './pages/speseric';
 import SpeseRic_id from './pages/speseric_id';
+import StatsUtente from './pages/StatsUtente';
 
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import $, { jQuery } from 'jquery';
@@ -46,7 +47,7 @@ function App() {
       $("html").removeClass("chiaro").addClass("scuro");
       $("#tema").attr("checked", true);
       $("meta[name=theme-color]").attr("content", "#000000");
-      
+
     }
 
     moment.locale('it');
@@ -144,6 +145,7 @@ function App() {
           <Route exact path="/profilo/debcred/:id" component={DebCred_id} />
           <Route exact path="/profilo/speseric" component={SpeseRic} />
           <Route exact path="/profilo/speseric/:id" component={SpeseRic_id} />
+          <Route exact path={["/profilo/stats-utente", "/profilo/stats-utente/:user"]} component={StatsUtente} />
 
           <Route>
             <E404 />
