@@ -1,58 +1,56 @@
-import React, { useState, useEffect } from 'react';
-import { Soldi, Text, Data } from '../components/inputs';
-import Box from '../components/box';
-import CurrencyFormat from 'react-currency-format';
-import BackBar from '../components/backbar';
-import Modale from '../components/modale';
-import $, { jQuery } from 'jquery';
+import React, { useState, useEffect } from "react";
+import { Soldi, Text, Data } from "../components/inputs";
+import Box from "../components/box";
+import CurrencyFormat from "react-currency-format";
+import BackBar from "../components/backbar";
+import Modale from "../components/modale";
+import $, { jQuery } from "jquery";
 
 function SpeseRic() {
-
   useEffect(() => {
     fetchData();
-  }, [])
+  }, []);
 
   const [itemsLoaded, setitemsLoaded] = useState(false);
   const [speseric, setSpeseric] = useState({
-    "Annuali": {
-      "hidden": true
+    Annuali: {
+      hidden: true,
     },
-    "Mensili": {
-      "hidden": false,
-      "dati": [
+    Mensili: {
+      hidden: false,
+      dati: [
         {
-          "id": "4",
-          "motivo": "Netflix",
-          "costo": "3.20",
-          "rinnovo": "2021-05-30 00:00:00"
+          id: "4",
+          motivo: "Netflix",
+          costo: "3.20",
+          rinnovo: "2021-05-30 00:00:00",
         },
         {
-          "id": "5",
-          "motivo": "sesso",
-          "costo": "6.00",
-          "rinnovo": "2021-05-04 00:00:00"
-        }
+          id: "5",
+          motivo: "sesso",
+          costo: "6.00",
+          rinnovo: "2021-05-04 00:00:00",
+        },
       ],
-      "totale": 9.2
-    }
+      totale: 9.2,
+    },
   });
 
   const fetchData = () => {
     Promise.all([
       fetch(`/API/speseric.php`, {
         headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        }
-      })
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }),
     ])
       .then(([res1]) => Promise.all([res1.json()]))
       .then(([data1]) => {
         setSpeseric(data1);
         setitemsLoaded(true);
-      })
-  }
-
+      });
+  };
 
   const aggiungi = (event) => {
     event.preventDefault();
@@ -79,21 +77,19 @@ function SpeseRic() {
           fetchData();
         } else {
           $(".wrap-caricamento").removeClass("visible");
-          alert(response)
+          alert(response);
         }
-      }
+      },
     });
-  }
+  };
 
   return (
-    <div id="speseric" className={itemsLoaded ? (null) : ('preloading')}>
-
+    <div id="speseric" className={itemsLoaded ? null : "preloading"}>
       <Modale
         dataModale="aggiungi"
         className="full"
         content={
           <form onSubmit={aggiungi}>
-
             <label htmlFor="periodo" className="col-2 select-wrap marbot">
               <select id="periodo" name="periodo">
                 <option value="0">Mensile</option>
@@ -108,22 +104,34 @@ function SpeseRic() {
 
             <div className="row no-wrap">
               <div className="col-3-2">
-                <button type="submit" className="button mini bgprimary">Aggiungi</button>
+                <button type="submit" className="button mini bgprimary">
+                  Aggiungi
+                </button>
               </div>
               <div className="col-3">
-                <a className="button mini close-modal bgalert" data-modal="aggiungi">Annulla</a>
+                <a
+                  className="button mini close-modal bgalert"
+                  data-modal="aggiungi"
+                >
+                  Annulla
+                </a>
               </div>
             </div>
           </form>
         }
       />
 
-      <BackBar text={'Spese Ricorrenti'} />
+      <BackBar text={"Spese Ricorrenti"} />
 
       <div className="modal">
         <div className="fixed bot">
           <div className="container">
-            <div className="open-modal button mini marboth" data-modal="aggiungi" >Aggiungi</div>
+            <div
+              className="open-modal button mini marboth"
+              data-modal="aggiungi"
+            >
+              Aggiungi
+            </div>
           </div>
         </div>
         <div className="container">
@@ -133,17 +141,42 @@ function SpeseRic() {
                 <div className="top">
                   <div className="container">
                     <div className="totale">
-                      <CurrencyFormat value={speseric.Mensili.totale} isNumericString={true} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} decimalScale={2} fixedDecimalScale={true} renderText={value =>
-                        <div className={`totale`}>
-                          € {value}
-                        </div>
-                      } />
-                      <span>Mensili</span>
+                      <CurrencyFormat
+                        value={speseric.Mensili.totale}
+                        isNumericString={true}
+                        displayType={"text"}
+                        thousandSeparator={"."}
+                        decimalSeparator={","}
+                        decimalScale={2}
+                        fixedDecimalScale={true}
+                        renderText={(value) => (
+                          <div className={`totale`}>€ {value}</div>
+                        )}
+                      />
+                      <span>
+                        Mensili
+                        <CurrencyFormat
+                          value={speseric.Mensili.totale * 12}
+                          isNumericString={true}
+                          displayType={"text"}
+                          thousandSeparator={"."}
+                          decimalSeparator={","}
+                          decimalScale={2}
+                          fixedDecimalScale={true}
+                          renderText={(value) => <> - € {value} in un Anno</>}
+                        />
+                      </span>
                     </div>
                   </div>
                 </div>
-                {speseric.Mensili.dati.map(spesa => (
-                  <Box link={`/profilo/speseric/${spesa.id}`} motivo={spesa.motivo} nonData="Rinnovo: " data={spesa.rinnovo} prezzo={spesa.costo} />
+                {speseric.Mensili.dati.map((spesa) => (
+                  <Box
+                    link={`/profilo/speseric/${spesa.id}`}
+                    motivo={spesa.motivo}
+                    nonData="Rinnovo: "
+                    data={spesa.rinnovo}
+                    prezzo={spesa.costo}
+                  />
                 ))}
               </div>
             ) : null}
@@ -152,29 +185,62 @@ function SpeseRic() {
                 <div className="top">
                   <div className="container">
                     <div className="totale">
-                      <CurrencyFormat value={speseric.Annuali.totale} isNumericString={true} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} decimalScale={2} fixedDecimalScale={true} renderText={value =>
-                        <div className={`totale`}>
-                          € {value}
-                        </div>
-                      } />
-                      <span>Annuali</span>
+                      <CurrencyFormat
+                        value={speseric.Annuali.totale}
+                        isNumericString={true}
+                        displayType={"text"}
+                        thousandSeparator={"."}
+                        decimalSeparator={","}
+                        decimalScale={2}
+                        fixedDecimalScale={true}
+                        renderText={(value) => (
+                          <div className={`totale`}>€ {value}</div>
+                        )}
+                      />
+                      <span>
+                        Annuali
+                        <CurrencyFormat
+                          value={speseric.Annuali.totale / 12}
+                          isNumericString={true}
+                          displayType={"text"}
+                          thousandSeparator={"."}
+                          decimalSeparator={","}
+                          decimalScale={2}
+                          fixedDecimalScale={true}
+                          renderText={(value) => <> - € {value} al Mese</>}
+                        />
+                      </span>
                     </div>
                   </div>
                 </div>
-                {speseric.Annuali.dati.map(spesa => (
-                  <Box link={`/profilo/speseric/${spesa.id}`} motivo={spesa.motivo} nonData="Rinnovo: " data={spesa.rinnovo} prezzo={spesa.costo} />
+                {speseric.Annuali.dati.map((spesa) => (
+                  <Box
+                    link={`/profilo/speseric/${spesa.id}`}
+                    motivo={spesa.motivo}
+                    nonData="Rinnovo: "
+                    data={spesa.rinnovo}
+                    prezzo={spesa.costo}
+                  />
                 ))}
               </div>
             ) : null}
             {speseric.Mensili.hidden === true ? (
               speseric.Annuali.hidden === true ? (
                 <div className="col">
-                  <div className="box" style={{ display: "block", maxWidth: "600px", margin: "20px auto" }}>
+                  <div
+                    className="box"
+                    style={{
+                      display: "block",
+                      maxWidth: "600px",
+                      margin: "20px auto",
+                    }}
+                  >
                     <div className="icona center" style={{ fontSize: "50px" }}>
                       <i className="fas fa-business-time"></i>
                     </div>
                     <div className="testo center">
-                      Aggiungi le spese riccorrenti che esegui, ad esempio gli abbonamenti di Netflix e Spotify
+                      Aggiungi le spese riccorrenti che esegui, ad esempio gli
+                      abbonamenti di Netflix e Spotify
                     </div>
                   </div>
                 </div>

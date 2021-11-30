@@ -1,38 +1,46 @@
-import React, { useState, useEffect } from 'react';
-import { Soldi, Text, Data } from '../components/inputs';
-import Box from '../components/box';
-import BackBar from '../components/backbar';
-import Modale from '../components/modale';
-import $ from 'jquery';
+import React, { useState, useEffect } from "react";
+import { Soldi, Text, Data } from "../components/inputs";
+import Box from "../components/box";
+import BackBar from "../components/backbar";
+import Modale from "../components/modale";
+import $ from "jquery";
 
 function SpeseRic_id(props) {
-
   const id = props.match.params.id;
 
   useEffect(() => {
     fetchData();
-  }, [])
+  }, []);
 
   const [itemsLoaded, setitemsLoaded] = useState(false);
-  const [speseric, setSpeseric] = useState({ "periodo": "1" });
+  const [speseric, setSpeseric] = useState({ periodo: "1" });
 
   const fetchData = () => {
     Promise.all([
       fetch(`/API/speseric.php?id=${id}`, {
         headers: {
-          'Content-Type': 'application/json',
-          'Accept': 'application/json'
-        }
-      })
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+      }),
     ])
       .then(([res1]) => Promise.all([res1.json()]))
       .then(([data1]) => {
         setSpeseric(data1);
         setitemsLoaded(true);
-      })
-  }
+      });
+  };
 
-  const backText = speseric.periodo == 0 ? (<span><b>Mensile</b></span>) : (<span><b>Annuale</b></span>)
+  const backText =
+    speseric.periodo == 0 ? (
+      <span>
+        <b>Mensile</b>
+      </span>
+    ) : (
+      <span>
+        <b>Annuale</b>
+      </span>
+    );
 
   function elimina() {
     $(".wrap-caricamento").addClass("visible");
@@ -41,7 +49,7 @@ function SpeseRic_id(props) {
       type: "POST",
       url: "/API/el-speseric.php",
       data: {
-        id: id
+        id: id,
       },
       success: function (response) {
         if (response == true) {
@@ -49,9 +57,9 @@ function SpeseRic_id(props) {
           window.history.back();
         } else {
           $(".wrap-caricamento").removeClass("visible");
-          alert(response)
+          alert(response);
         }
-      }
+      },
     });
   }
 
@@ -81,40 +89,66 @@ function SpeseRic_id(props) {
           fetchData();
         } else {
           $(".wrap-caricamento").removeClass("visible");
-          alert(response)
+          alert(response);
         }
-      }
+      },
     });
-  }
+  };
 
   return (
-    <div id="transazione" className={itemsLoaded ? (null) : ('preloading')}>
+    <div id="transazione" className={itemsLoaded ? null : "preloading"}>
       {speseric.motivo ? (
         <Modale
           dataModale="modifica"
           className="full"
           content={
             <form onSubmit={modifica}>
-
               <label htmlFor="periodo" className="col-2 select-wrap marbot">
                 <select id="periodo" name="periodo">
-                  <option value="0" selected={speseric.periodo == 0 ? true : false} >Mensile</option>
-                  <option value="1" selected={speseric.periodo == 1 ? true : false} >Annuale</option>
+                  <option
+                    value="0"
+                    selected={speseric.periodo == 0 ? true : false}
+                  >
+                    Mensile
+                  </option>
+                  <option
+                    value="1"
+                    selected={speseric.periodo == 1 ? true : false}
+                  >
+                    Annuale
+                  </option>
                 </select>
                 <span className="placeholder">Periodo</span>
               </label>
 
               <Soldi data={speseric.costo} />
-              <Text id="motivo" nome="Motivo" data={speseric.motivo} required={true} />
+              <Text
+                id="motivo"
+                nome="Motivo"
+                data={speseric.motivo}
+                required={true}
+              />
 
-              <Data id="rinnovo" nome="rinnovo" data={speseric.rinnovo} required={true} />
+              <Data
+                id="rinnovo"
+                nome="rinnovo"
+                data={speseric.rinnovo}
+                required={true}
+              />
 
               <div className="row no-wrap">
                 <div className="col-3-2">
-                  <button type="submit" className="button mini bgprimary">Modifica</button>
+                  <button type="submit" className="button mini bgprimary">
+                    Modifica
+                  </button>
                 </div>
                 <div className="col-3">
-                  <a className="button mini close-modal bgalert" data-modal="modifica">Annulla</a>
+                  <a
+                    className="button mini close-modal bgalert"
+                    data-modal="modifica"
+                  >
+                    Annulla
+                  </a>
                 </div>
               </div>
             </form>
@@ -135,37 +169,62 @@ function SpeseRic_id(props) {
             </div>
             <div className="row no-wrap">
               <div className="col-2">
-                <a className="button mini close-modal bgprimary" data-modal="elimina">No</a>
+                <a
+                  className="button mini close-modal bgprimary"
+                  data-modal="elimina"
+                >
+                  No
+                </a>
               </div>
               <div className="col-2">
-                <a className="button mini bgalert" onClick={elimina} >Si</a>
+                <a className="button mini bgalert" onClick={elimina}>
+                  Si
+                </a>
               </div>
             </div>
           </div>
         }
       />
 
-      <BackBar text={"Spese Ricorrenti"} />
+      <BackBar text={"Spese Fisse"} />
 
       <div className="container">
-
         <Box categoria={backText} />
 
-        <Box motivo={speseric.motivo ?? "Motivo Random"} nonData="Rinnovo: " data={speseric.rinnovo} prezzo={speseric.costo} />
+        <Box
+          motivo={speseric.motivo ?? "Motivo Random"}
+          nonData="Rinnovo: "
+          data={speseric.rinnovo}
+          prezzo={speseric.costo}
+        />
+        {speseric.periodo == 0 ? (
+          <Box motivo={"In un Anno"} prezzo={speseric.costo * 12} />
+        ) : (
+          <Box motivo={"Al Mese"} prezzo={speseric.costo / 12} />
+        )}
 
         <div className="fixed bot">
           <div className="container">
             <div className="row no-wrap">
               <div className="col-3-2">
-                <a className="button bgprimary mini open-modal marbot" data-modal="modifica">Modifica</a>
+                <a
+                  className="button bgprimary mini open-modal marbot"
+                  data-modal="modifica"
+                >
+                  Modifica
+                </a>
               </div>
               <div className="col-3">
-                <a className="button bgalert mini open-modal marbot" data-modal="elimina">Elimina</a>
+                <a
+                  className="button bgalert mini open-modal marbot"
+                  data-modal="elimina"
+                >
+                  Elimina
+                </a>
               </div>
             </div>
           </div>
         </div>
-
       </div>
     </div>
   );
