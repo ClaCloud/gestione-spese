@@ -31,7 +31,7 @@ function Card(props) {
         decimalSeparator={","}
         decimalScale={2}
         fixedDecimalScale={true}
-        renderText={(value) => <span className="totale">€ {value}</span>}
+        renderText={(value) => <span className="totale daBlur">€ {value}</span>}
       />
       <span className="nome_carta">
         {props.metodo}

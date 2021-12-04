@@ -131,32 +131,81 @@ function StatsAnno() {
               <div className="mese-S">
                 <div className="top">
                   <div className="container">
-                    <h2 className="mese">
-                      {anno.anno}
-                    </h2>
+                    <h2 className="mese">{anno.anno}</h2>
                     <div className="row">
                       <div className="totale col-3 center">
-                        <CurrencyFormat value={anno.entrate} isNumericString={true} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} decimalScale={2} fixedDecimalScale={true} renderText={value =>
-                          <div className={`totale ${anno.entrate > 0 ? ('green') : (anno.entrate < 0 ? 'alert' : null)}`}>
-                            € {value}
-                          </div>
-                        } />
+                        <CurrencyFormat
+                          value={anno.entrate}
+                          isNumericString={true}
+                          displayType={"text"}
+                          thousandSeparator={"."}
+                          decimalSeparator={","}
+                          decimalScale={2}
+                          fixedDecimalScale={true}
+                          renderText={(value) => (
+                            <div
+                              className={`totale daBlur ${
+                                anno.entrate > 0
+                                  ? "green"
+                                  : anno.entrate < 0
+                                  ? "alert"
+                                  : null
+                              }`}
+                            >
+                              € {value}
+                            </div>
+                          )}
+                        />
                         <span>Entrate</span>
                       </div>
                       <div className="totale col-3 center">
-                        <CurrencyFormat value={anno.uscite} isNumericString={true} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} decimalScale={2} fixedDecimalScale={true} renderText={value =>
-                          <div className={`totale ${anno.uscite > 0 ? ('green') : (anno.uscite < 0 ? 'alert' : null)}`}>
-                            € {value}
-                          </div>
-                        } />
+                        <CurrencyFormat
+                          value={anno.uscite}
+                          isNumericString={true}
+                          displayType={"text"}
+                          thousandSeparator={"."}
+                          decimalSeparator={","}
+                          decimalScale={2}
+                          fixedDecimalScale={true}
+                          renderText={(value) => (
+                            <div
+                              className={`totale daBlur ${
+                                anno.uscite > 0
+                                  ? "green"
+                                  : anno.uscite < 0
+                                  ? "alert"
+                                  : null
+                              }`}
+                            >
+                              € {value}
+                            </div>
+                          )}
+                        />
                         <span>Uscite</span>
                       </div>
                       <div className="totale col-3 center">
-                        <CurrencyFormat value={anno.bilancio} isNumericString={true} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} decimalScale={2} fixedDecimalScale={true} renderText={value =>
-                          <div className={`totale ${anno.bilancio > 0 ? ('green') : (anno.bilancio < 0 ? 'alert' : null)}`}>
-                            € {value}
-                          </div>
-                        } />
+                        <CurrencyFormat
+                          value={anno.bilancio}
+                          isNumericString={true}
+                          displayType={"text"}
+                          thousandSeparator={"."}
+                          decimalSeparator={","}
+                          decimalScale={2}
+                          fixedDecimalScale={true}
+                          renderText={(value) => (
+                            <div
+                              className={`totale daBlur ${
+                                anno.bilancio > 0
+                                  ? "green"
+                                  : anno.bilancio < 0
+                                  ? "alert"
+                                  : null
+                              }`}
+                            >
+                              € {value}
+                            </div>
+                          )}
+                        />
                         <span>Bilancio</span>
                       </div>
                     </div>
@@ -164,34 +213,83 @@ function StatsAnno() {
                 </div>
                 <div className="modal">
                   <div className="container">
-                    {statistiche.inner[curr].map(mese => (
+                    {statistiche.inner[curr].map((mese) => (
                       <div className="box mese">
                         <div className="row">
-                          <div className="col-3 mse">
-                            {mese.mese}
-                          </div>
+                          <div className="col-3 mse">{mese.mese}</div>
                           <div className="col-3 prz">
-                            <CurrencyFormat value={mese.entrate} isNumericString={true} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} decimalScale={2} fixedDecimalScale={true} renderText={value =>
-                              <div className={`prezzo ${mese.entrate > 0 ? ('green') : (mese.entrate < 0 ? 'alert' : null)}`}>
-                                {mese.entrate == 0 ? '-' : `€ ${value}`}
-                              </div>
-                            } />
+                            <CurrencyFormat
+                              value={mese.entrate}
+                              isNumericString={true}
+                              displayType={"text"}
+                              thousandSeparator={"."}
+                              decimalSeparator={","}
+                              decimalScale={2}
+                              fixedDecimalScale={true}
+                              renderText={(value) => (
+                                <div
+                                  className={`prezzo daBlur ${
+                                    mese.entrate > 0
+                                      ? "green"
+                                      : mese.entrate < 0
+                                      ? "alert"
+                                      : null
+                                  }`}
+                                >
+                                  {mese.entrate == 0 ? "-" : `€ ${value}`}
+                                </div>
+                              )}
+                            />
                             <span>Entrate</span>
                           </div>
                           <div className="col-3 prz">
-                            <CurrencyFormat value={mese.uscite} isNumericString={true} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} decimalScale={2} fixedDecimalScale={true} renderText={value =>
-                              <div className={`prezzo ${mese.uscite > 0 ? ('green') : (mese.uscite < 0 ? 'alert' : null)}`}>
-                                {mese.uscite == 0 ? '-' : `€ ${value}`}
-                              </div>
-                            } />
+                            <CurrencyFormat
+                              value={mese.uscite}
+                              isNumericString={true}
+                              displayType={"text"}
+                              thousandSeparator={"."}
+                              decimalSeparator={","}
+                              decimalScale={2}
+                              fixedDecimalScale={true}
+                              renderText={(value) => (
+                                <div
+                                  className={`prezzo daBlur ${
+                                    mese.uscite > 0
+                                      ? "green"
+                                      : mese.uscite < 0
+                                      ? "alert"
+                                      : null
+                                  }`}
+                                >
+                                  {mese.uscite == 0 ? "-" : `€ ${value}`}
+                                </div>
+                              )}
+                            />
                             <span>Uscite</span>
                           </div>
                           <div className="col-3 prz">
-                            <CurrencyFormat value={mese.bilancio} isNumericString={true} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} decimalScale={2} fixedDecimalScale={true} renderText={value =>
-                              <div className={`prezzo ${mese.bilancio > 0 ? ('green') : (mese.bilancio < 0 ? 'alert' : null)}`}>
-                                {mese.bilancio == 0 ? '-' : `€ ${value}`}
-                              </div>
-                            } />
+                            <CurrencyFormat
+                              value={mese.bilancio}
+                              isNumericString={true}
+                              displayType={"text"}
+                              thousandSeparator={"."}
+                              decimalSeparator={","}
+                              decimalScale={2}
+                              fixedDecimalScale={true}
+                              renderText={(value) => (
+                                <div
+                                  className={`prezzo daBlur ${
+                                    mese.bilancio > 0
+                                      ? "green"
+                                      : mese.bilancio < 0
+                                      ? "alert"
+                                      : null
+                                  }`}
+                                >
+                                  {mese.bilancio == 0 ? "-" : `€ ${value}`}
+                                </div>
+                              )}
+                            />
                             <span>Bilancio</span>
                           </div>
                         </div>
@@ -201,7 +299,7 @@ function StatsAnno() {
                 </div>
               </div>
             </SwiperSlide>
-          )
+          );
         })}
       </Swiper>
     </div>

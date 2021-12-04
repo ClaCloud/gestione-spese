@@ -150,7 +150,7 @@ function SpeseRic() {
                         decimalScale={2}
                         fixedDecimalScale={true}
                         renderText={(value) => (
-                          <div className={`totale`}>€ {value}</div>
+                          <div className={`totale daBlur`}>€ {value}</div>
                         )}
                       />
                       <span>
@@ -163,7 +163,13 @@ function SpeseRic() {
                           decimalSeparator={","}
                           decimalScale={2}
                           fixedDecimalScale={true}
-                          renderText={(value) => <> - € {value} in un Anno</>}
+                          renderText={(value) => (
+                            <>
+                              {" "}
+                              • € <span className="daBlur">{value}</span>{" "}
+                              all'Anno
+                            </>
+                          )}
                         />
                       </span>
                     </div>
@@ -194,7 +200,7 @@ function SpeseRic() {
                         decimalScale={2}
                         fixedDecimalScale={true}
                         renderText={(value) => (
-                          <div className={`totale`}>€ {value}</div>
+                          <div className={`totale daBlur`}>€ {value}</div>
                         )}
                       />
                       <span>
@@ -207,7 +213,13 @@ function SpeseRic() {
                           decimalSeparator={","}
                           decimalScale={2}
                           fixedDecimalScale={true}
-                          renderText={(value) => <> - € {value} al Mese</>}
+                          renderText={(value) => (
+                            <>
+                              {" "}
+                              • € <span className="daBlur">{value}</span> al
+                              Mese
+                            </>
+                          )}
                         />
                       </span>
                     </div>

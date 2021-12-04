@@ -97,14 +97,12 @@ function DebCred() {
   }
 
   return (
-    <div id="debcred" className={itemsLoaded ? (null) : ('preloading')}>
-
+    <div id="debcred" className={itemsLoaded ? null : "preloading"}>
       <Modale
         dataModale="aggiungi"
         content={
           <form onSubmit={aggiungi}>
             <div className="row">
-
               <label htmlFor="tipo" className="col-2 select-wrap marbot">
                 <select id="tipo" name="tipo">
                   <option value="0">Debito</option>
@@ -112,45 +110,79 @@ function DebCred() {
                 </select>
                 <span className="placeholder">Tipo</span>
               </label>
-              <Text id="persona" nome="Persona" required={true} className="col-2" />
+              <Text
+                id="persona"
+                nome="Persona"
+                required={true}
+                className="col-2"
+              />
             </div>
-            
+
             <Soldi />
             <Text id="motivo" nome="Motivo" required={true} />
             <div className="row no-wrap">
               <div className="col-3-2">
-                <button type="submit" className="button mini bgprimary">Aggiungi</button>
+                <button type="submit" className="button mini bgprimary">
+                  Aggiungi
+                </button>
               </div>
               <div className="col-3">
-                <a className="button mini close-modal bgalert" data-modal="aggiungi">Annulla</a>
+                <a
+                  className="button mini close-modal bgalert"
+                  data-modal="aggiungi"
+                >
+                  Annulla
+                </a>
               </div>
             </div>
           </form>
         }
       />
 
-      <BackBar text={'Debiti e Crediti'} />
+      <BackBar text={"Debiti e Crediti"} />
 
       <div className="modal">
+        <div className="fixed bot">
+          <div className="container">
+            <div
+              className="open-modal button mini marboth"
+              data-modal="aggiungi"
+            >
+              Aggiungi
+            </div>
+          </div>
+        </div>
         <div className="container">
-          <div className="open-modal button mini marboth" data-modal="aggiungi" >Aggiungi</div>
           <div className="row">
             {debcred.debiti.hidden === false ? (
               <div className="col-2">
                 <div className="top">
                   <div className="container">
                     <div className="totale">
-                      <CurrencyFormat value={debcred.debiti.totale} isNumericString={true} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} decimalScale={2} fixedDecimalScale={true} renderText={value =>
-                        <div className={`totale`}>
-                          € {value}
-                        </div>
-                      } />
+                      <CurrencyFormat
+                        value={debcred.debiti.totale}
+                        isNumericString={true}
+                        displayType={"text"}
+                        thousandSeparator={"."}
+                        decimalSeparator={","}
+                        decimalScale={2}
+                        fixedDecimalScale={true}
+                        renderText={(value) => (
+                          <div className={`totale daBlur`}>€ {value}</div>
+                        )}
+                      />
                       <span>Totale Debiti</span>
                     </div>
                   </div>
                 </div>
-                {debcred.debiti.dati.map(debito => (
-                  <Box link={`/profilo/debcred/${debito.id}`} className="debito" motivo={debito.motivo} nonData={debito.persona} prezzo={debito.valuta} />
+                {debcred.debiti.dati.map((debito) => (
+                  <Box
+                    link={`/profilo/debcred/${debito.id}`}
+                    className="debito"
+                    motivo={debito.motivo}
+                    nonData={debito.persona}
+                    prezzo={debito.valuta}
+                  />
                 ))}
               </div>
             ) : null}
@@ -159,33 +191,54 @@ function DebCred() {
                 <div className="top">
                   <div className="container">
                     <div className="totale">
-                      <CurrencyFormat value={debcred.crediti.totale} isNumericString={true} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} decimalScale={2} fixedDecimalScale={true} renderText={value =>
-                        <div className={`totale`}>
-                          € {value}
-                        </div>
-                      } />
+                      <CurrencyFormat
+                        value={debcred.crediti.totale}
+                        isNumericString={true}
+                        displayType={"text"}
+                        thousandSeparator={"."}
+                        decimalSeparator={","}
+                        decimalScale={2}
+                        fixedDecimalScale={true}
+                        renderText={(value) => (
+                          <div className={`totale daBlur`}>€ {value}</div>
+                        )}
+                      />
                       <span>Totale Crediti</span>
                     </div>
                   </div>
                 </div>
-                {debcred.crediti.dati.map(credito => (
-                  <Box link={`/profilo/debcred/${credito.id}`} className="credito" motivo={credito.motivo} nonData={credito.persona} prezzo={credito.valuta} />
+                {debcred.crediti.dati.map((credito) => (
+                  <Box
+                    link={`/profilo/debcred/${credito.id}`}
+                    className="credito"
+                    motivo={credito.motivo}
+                    nonData={credito.persona}
+                    prezzo={credito.valuta}
+                  />
                 ))}
               </div>
             ) : null}
             {debcred.debiti.hidden === true ? (
               debcred.crediti.hidden === true ? (
                 <div className="col">
-                <div className="box" style={{ display: "block", maxWidth: "600px", margin: "20px auto" }}>
-                  <div className="icona center" style={{ fontSize: "50px" }}>
-                    <i className="fas fa-business-time"></i>
-                  </div>
-                  <div className="testo center">
-                    Aggiungi i debiti o credi che hai verso gli altri, così da non dimenticare nulla
+                  <div
+                    className="box"
+                    style={{
+                      display: "block",
+                      maxWidth: "600px",
+                      margin: "20px auto",
+                    }}
+                  >
+                    <div className="icona center" style={{ fontSize: "50px" }}>
+                      <i className="fas fa-business-time"></i>
+                    </div>
+                    <div className="testo center">
+                      Aggiungi i debiti o credi che hai verso gli altri, così da
+                      non dimenticare nulla
+                    </div>
                   </div>
                 </div>
-              </div>
-              ): null
+              ) : null
             ) : null}
           </div>
         </div>

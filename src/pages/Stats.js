@@ -196,37 +196,84 @@ function Stats() {
                   <div className="top">
                     <div className="container">
                       <h2 className="mese">
-                        <span className="anno">
-                          {mese.anno}
-                        </span>
+                        <span className="anno">{mese.anno}</span>
                         {mese.mese}
                       </h2>
-                      <div className="chart">
-
-                      </div>
+                      <div className="chart"></div>
                       <div className="row">
                         <div className="totale col-3 center">
-                          <CurrencyFormat value={mese.entrate} isNumericString={true} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} decimalScale={2} fixedDecimalScale={true} renderText={value =>
-                            <div className={`totale ${mese.entrate > 0 ? ('green') : (mese.entrate < 0 ? 'alert' : null)}`}>
-                              € {value}
-                            </div>
-                          } />
+                          <CurrencyFormat
+                            value={mese.entrate}
+                            isNumericString={true}
+                            displayType={"text"}
+                            thousandSeparator={"."}
+                            decimalSeparator={","}
+                            decimalScale={2}
+                            fixedDecimalScale={true}
+                            renderText={(value) => (
+                              <div
+                                className={`totale daBlur ${
+                                  mese.entrate > 0
+                                    ? "green"
+                                    : mese.entrate < 0
+                                    ? "alert"
+                                    : null
+                                }`}
+                              >
+                                € {value}
+                              </div>
+                            )}
+                          />
                           <span>Entrate</span>
                         </div>
                         <div className="totale col-3 center">
-                          <CurrencyFormat value={mese.uscite} isNumericString={true} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} decimalScale={2} fixedDecimalScale={true} renderText={value =>
-                            <div className={`totale ${mese.uscite > 0 ? ('green') : (mese.uscite < 0 ? 'alert' : null)}`}>
-                              € {value}
-                            </div>
-                          } />
+                          <CurrencyFormat
+                            value={mese.uscite}
+                            isNumericString={true}
+                            displayType={"text"}
+                            thousandSeparator={"."}
+                            decimalSeparator={","}
+                            decimalScale={2}
+                            fixedDecimalScale={true}
+                            renderText={(value) => (
+                              <div
+                                className={`totale daBlur ${
+                                  mese.uscite > 0
+                                    ? "green"
+                                    : mese.uscite < 0
+                                    ? "alert"
+                                    : null
+                                }`}
+                              >
+                                € {value}
+                              </div>
+                            )}
+                          />
                           <span>Uscite</span>
                         </div>
                         <div className="totale col-3 center">
-                          <CurrencyFormat value={mese.bilancio} isNumericString={true} displayType={'text'} thousandSeparator={'.'} decimalSeparator={','} decimalScale={2} fixedDecimalScale={true} renderText={value =>
-                            <div className={`totale ${mese.bilancio > 0 ? ('green') : (mese.bilancio < 0 ? 'alert' : null)}`}>
-                              € {value}
-                            </div>
-                          } />
+                          <CurrencyFormat
+                            value={mese.bilancio}
+                            isNumericString={true}
+                            displayType={"text"}
+                            thousandSeparator={"."}
+                            decimalSeparator={","}
+                            decimalScale={2}
+                            fixedDecimalScale={true}
+                            renderText={(value) => (
+                              <div
+                                className={`totale daBlur ${
+                                  mese.bilancio > 0
+                                    ? "green"
+                                    : mese.bilancio < 0
+                                    ? "alert"
+                                    : null
+                                }`}
+                              >
+                                € {value}
+                              </div>
+                            )}
+                          />
                           <span>Bilancio</span>
                         </div>
                       </div>
@@ -234,7 +281,7 @@ function Stats() {
                   </div>
                   <div className="modal">
                     <div className="container">
-                      {statistiche.inner[curr].map(categoria => (
+                      {statistiche.inner[curr].map((categoria) => (
                         // <div className="box viewCat" key={curr + "_" + categoria.id} onClick={() => ViewCat(categoria.id, categoria.dataInizio)}>
                         //   <div className="icona">
                         //     <img src={categoria.percorso} alt="" width="100%" />
@@ -248,16 +295,25 @@ function Stats() {
                         //     </div>
                         //   } />
                         // </div>
-                        <div onClick={() => ViewCat(categoria.id, categoria.dataInizio)}>
-                          <Box key={curr + "_" + categoria.id} motivo={categoria.Categoria} data={categoria.Data} prezzo={categoria.totale} icona={categoria.percorso} />
+                        <div
+                          onClick={() =>
+                            ViewCat(categoria.id, categoria.dataInizio)
+                          }
+                        >
+                          <Box
+                            key={curr + "_" + categoria.id}
+                            motivo={categoria.Categoria}
+                            data={categoria.Data}
+                            prezzo={categoria.totale}
+                            icona={categoria.percorso}
+                          />
                         </div>
                       ))}
-
                     </div>
                   </div>
                 </div>
               </SwiperSlide>
-            )
+            );
           } else {
             return (
               <SwiperSlide data-history={`stats-mese-${curr}`} key={curr}>

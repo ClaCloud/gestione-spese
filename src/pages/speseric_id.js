@@ -198,7 +198,7 @@ function SpeseRic_id(props) {
           prezzo={speseric.costo}
         />
         {speseric.periodo == 0 ? (
-          <Box motivo={"In un Anno"} prezzo={speseric.costo * 12} />
+          <Box motivo={"all'Anno"} prezzo={speseric.costo * 12} />
         ) : (
           <Box motivo={"Al Mese"} prezzo={speseric.costo / 12} />
         )}
