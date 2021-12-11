@@ -77,6 +77,24 @@ function App() {
   const cookies = new Cookies();
 
   useEffect(() => {
+    if (cookies.get("blur")) {
+      $("html").addClass("daBlur");
+    }
+
+    $("#root").on("click", ".fa-eye-change", function () {
+      const current = new Date();
+      const nextYear = new Date();
+      nextYear.setFullYear(current.getFullYear() + 1);
+
+      if ($("html").hasClass("daBlur")) {
+        $("html").removeClass("daBlur");
+        cookies.remove("blur", { path: "/" });
+      } else {
+        $("html").addClass("daBlur");
+        cookies.set("blur", "true", { path: "/", expires: nextYear });
+      }
+    });
+
     if (cookies.get("tema") == "chiaro") {
       $("html").removeClass("scuro").addClass("chiaro");
       $("#tema").attr("checked", false);

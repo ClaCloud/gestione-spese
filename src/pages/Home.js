@@ -3,8 +3,7 @@ import dateFormat from 'dateformat';
 import CurrencyFormat from 'react-currency-format';
 import Box from '../components/box';
 import { Data, Text, Select, Option } from '../components/inputs';
-import $, { jQuery } from 'jquery';
-import Cookies from 'universal-cookie';
+import $ from 'jquery';
 
 const Home = () => {
 
@@ -21,10 +20,6 @@ const Home = () => {
   const [categorie, setCategorie] = useState([]);
 
   useEffect(() => {
-
-    if (cookies.get('blur')) {
-      $("html").addClass("daBlur");
-    }
 
     fetchData();
 
@@ -57,23 +52,7 @@ const Home = () => {
         //Search();
       }
     });
-
-    $(".fa-eye-change").on("click", function () {
-      const current = new Date();
-      const nextYear = new Date();
-      nextYear.setFullYear(current.getFullYear() + 1);
-
-      if ($("html").hasClass("daBlur")) {
-        $("html").removeClass("daBlur");
-        cookies.remove("blur", { path: '/' });
-      } else {
-        $("html").addClass("daBlur");
-        cookies.set("blur", "true", { path: '/', expires: nextYear });
-      }
-    });
   }, []);
-
-  const cookies = new Cookies();
 
   function SayMese(props) {
     const label = props.label,
